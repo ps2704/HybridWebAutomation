@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+    <line>
+      <![CDATA[*******************************************************************]]>
+    </line>
+    <line>
+      <![CDATA[TEST CASE : Demo on Web]]>
+    </line>
+    <line>
+      <![CDATA[*******************************************************************]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On SignIn Button]]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'ps8940@gmail.com' in 'Email']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'Sanvi@123' in 'password']]>
+    </line>
+    <line>
+      <![CDATA[Clicked On password]]>
+    </line>
+    <line>
+      <![CDATA[verifying path]]>
+    </line>
+    <line>
+      <![CDATA[/home/sourabh/Downloads/My doc/Demo/target/test-classes/Automation-c78cfc6f1fe7.p12]]>
+    </line>
+  </reporter-output>
+  <suite name="Command line suite" duration-ms="14089" started-at="2021-04-03T13:44:05Z" finished-at="2021-04-03T13:44:19Z">
+    <groups>
+      <group name="Demo">
+        <method signature="Demo.Demo_on_Web()[pri:0, instance:TestSuite.Demo@64616ca2]" name="Demo_on_Web" class="TestSuite.Demo"/>
+      </group> <!-- Demo -->
+      <group name="production">
+        <method signature="Demo.Demo_on_Web()[pri:0, instance:TestSuite.Demo@64616ca2]" name="Demo_on_Web" class="TestSuite.Demo"/>
+      </group> <!-- production -->
+    </groups>
+    <test name="Command line test" duration-ms="14089" started-at="2021-04-03T13:44:05Z" finished-at="2021-04-03T13:44:19Z">
+      <class name="FrameWork.Framework">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:FrameWork.Framework@3b81a1bc]" name="beforeSuite" is-config="true" duration-ms="3781" started-at="2021-04-03T19:14:01Z" finished-at="2021-04-03T19:14:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="FAIL" signature="SessionTearDown()[pri:0, instance:FrameWork.Framework@3b81a1bc]" name="SessionTearDown" is-config="true" duration-ms="0" started-at="2021-04-03T19:14:19Z" finished-at="2021-04-03T19:14:19Z">
+          <exception class="java.lang.NullPointerException">
+            <full-stacktrace>
+              <![CDATA[java.lang.NullPointerException
+	at FrameWork.DataBaseActivity.dropTableFromGsheet(DataBaseActivity.java:41)
+	at FrameWork.Framework.SessionTearDown(Framework.java:228)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:515)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:217)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:144)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:357)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:289)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1293)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1218)
+	at org.testng.TestNG.runSuites(TestNG.java:1133)
+	at org.testng.TestNG.run(TestNG.java:1104)
+	at FrameWork.TestRunner.main(TestRunner.java:44)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.NullPointerException -->
+          <reporter-output>
+            <line>
+              <![CDATA[verifying path]]>
+            </line>
+            <line>
+              <![CDATA[/home/sourabh/Downloads/My doc/Demo/target/test-classes/Automation-c78cfc6f1fe7.p12]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- SessionTearDown -->
+      </class> <!-- FrameWork.Framework -->
+      <class name="TestSuite.Demo">
+        <test-method status="PASS" signature="preSetup()[pri:0, instance:TestSuite.Demo@64616ca2]" name="preSetup" is-config="true" duration-ms="106" started-at="2021-04-03T19:14:05Z" finished-at="2021-04-03T19:14:05Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preSetup -->
+        <test-method status="PASS" signature="Demo_on_Web()[pri:0, instance:TestSuite.Demo@64616ca2]" name="Demo_on_Web" duration-ms="13751" started-at="2021-04-03T19:14:05Z" finished-at="2021-04-03T19:14:19Z">
+          <reporter-output>
+            <line>
+              <![CDATA[*******************************************************************]]>
+            </line>
+            <line>
+              <![CDATA[TEST CASE : Demo on Web]]>
+            </line>
+            <line>
+              <![CDATA[*******************************************************************]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On SignIn Button]]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'ps8940@gmail.com' in 'Email']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'Sanvi@123' in 'password']]>
+            </line>
+            <line>
+              <![CDATA[Clicked On password]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- Demo_on_Web -->
+        <test-method status="PASS" signature="flushExtent()[pri:0, instance:TestSuite.Demo@64616ca2]" name="flushExtent" is-config="true" duration-ms="218" started-at="2021-04-03T19:14:19Z" finished-at="2021-04-03T19:14:19Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- flushExtent -->
+      </class> <!-- TestSuite.Demo -->
+    </test> <!-- Command line test -->
+  </suite> <!-- Command line suite -->
+</testng-results>
