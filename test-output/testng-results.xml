@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="3" total="5" passed="2">
+  <reporter-output>
+    <line>
+      <![CDATA[*******************************************************************]]>
+    </line>
+    <line>
+      <![CDATA[*******************************************************************]]>
+    </line>
+    <line>
+      <![CDATA[TEST CASE : Demo on WebWithGuestCheckout]]>
+    </line>
+    <line>
+      <![CDATA[TEST CASE : Demo on Web]]>
+    </line>
+    <line>
+      <![CDATA[*******************************************************************]]>
+    </line>
+    <line>
+      <![CDATA[*******************************************************************]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On myAccountOption]]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'User' in 'FirstName']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'Test' in 'LastName']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'ps3@gmail.com' in 'SignupMail']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'Sanvi@123' in 'signupPassword']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'Sanvi@123' in 'Confirm Password']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  '7042117434' in 'PhoneNumber']]>
+    </line>
+    <line>
+      <![CDATA[Clicked On RegisterBtn]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On SubCategory]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Product]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Addtocart]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On GoToCart]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Increaseqty]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Decreaseqty]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On removeCartq]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On SubCategory]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Product]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Addtocart]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On GoToCart]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Checkout]]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'ps8940@gmail.com' in 'Email']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'TestOrder' in 'SippingName']]>
+    </line>
+    <line>
+      <![CDATA[Clicked On EnterManuallyAddress]]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'testaddress' in 'ShippingAddressLine1']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'test' in 'ShippingAddressLine2']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'newyork' in 'shippingLocality']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  '10052' in 'shippingPostalCode']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  '4111111111111111' in 'cardNumber']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  '03/31' in 'cardExpiry']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  '123' in 'CheckoutCardCvc']]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Proceed to Checkout]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On myAccountOption]]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'User' in 'FirstName']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'Test' in 'LastName']]>
+    </line>
+    <line>
+      <![CDATA[GetText OrderConfirmationText]]>
+    </line>
+    <line>
+      <![CDATA[OrderId OrderConfirmationNumber]]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'ps3@gmail.com' in 'SignupMail']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'Sanvi@123' in 'signupPassword']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'Sanvi@123' in 'Confirm Password']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  '7042117434' in 'PhoneNumber']]>
+    </line>
+    <line>
+      <![CDATA[Clicked On RegisterBtn]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On SubCategory]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Product]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Addtocart]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On GoToCart]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Increaseqty]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Decreaseqty]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On removeCartq]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On SubCategory]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Product]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Addtocart]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On GoToCart]]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Checkout]]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'ps8940@gmail.com' in 'Email']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'TestOrder' in 'SippingName']]>
+    </line>
+    <line>
+      <![CDATA[Clicked On EnterManuallyAddress]]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'testaddress' in 'ShippingAddressLine1']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'test' in 'ShippingAddressLine2']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  'newyork' in 'shippingLocality']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  '10052' in 'shippingPostalCode']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  '4111111111111111' in 'cardNumber']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  '03/31' in 'cardExpiry']]>
+    </line>
+    <line>
+      <![CDATA[Entered value  '123' in 'CheckoutCardCvc']]>
+    </line>
+    <line>
+      <![CDATA[Clicked On Proceed to Checkout]]>
+    </line>
+    <line>
+      <![CDATA[GetText OrderConfirmationText]]>
+    </line>
+    <line>
+      <![CDATA[OrderId OrderConfirmationNumber]]>
+    </line>
+  </reporter-output>
+  <suite name="Command line suite" duration-ms="178041" started-at="2021-05-17T06:15:40Z" finished-at="2021-05-17T06:18:38Z">
+    <groups>
+      <group name="Demo">
+        <method signature="Demo.Demo_on_Web()[pri:0, instance:TestSuite.Demo@13fee20c]" name="Demo_on_Web" class="TestSuite.Demo"/>
+        <method signature="Demo.Demo_on_WebWithGuestCheckout()[pri:0, instance:TestSuite.Demo@13fee20c]" name="Demo_on_WebWithGuestCheckout" class="TestSuite.Demo"/>
+      </group> <!-- Demo -->
+      <group name="production">
+        <method signature="Demo.Demo_on_Web()[pri:0, instance:TestSuite.Demo@13fee20c]" name="Demo_on_Web" class="TestSuite.Demo"/>
+        <method signature="Demo.Demo_on_WebWithGuestCheckout()[pri:0, instance:TestSuite.Demo@13fee20c]" name="Demo_on_WebWithGuestCheckout" class="TestSuite.Demo"/>
+      </group> <!-- production -->
+    </groups>
+    <test name="Command line test" duration-ms="178041" started-at="2021-05-17T06:15:40Z" finished-at="2021-05-17T06:18:38Z">
+      <class name="FrameWork.Framework">
+        <test-method status="PASS" signature="beforeSuite()[pri:0, instance:FrameWork.Framework@42d3bd8b]" name="beforeSuite" is-config="true" duration-ms="5625" started-at="2021-05-17T11:45:34Z" finished-at="2021-05-17T11:45:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method status="PASS" signature="SessionTearDown()[pri:0, instance:FrameWork.Framework@42d3bd8b]" name="SessionTearDown" is-config="true" duration-ms="109" started-at="2021-05-17T11:48:38Z" finished-at="2021-05-17T11:48:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- SessionTearDown -->
+      </class> <!-- FrameWork.Framework -->
+      <class name="TestSuite.Demo">
+        <test-method status="PASS" signature="preSetup()[pri:0, instance:TestSuite.Demo@13fee20c]" name="preSetup" is-config="true" duration-ms="174" started-at="2021-05-17T11:45:40Z" finished-at="2021-05-17T11:45:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preSetup -->
+        <test-method status="PASS" signature="preSetup()[pri:0, instance:TestSuite.Demo@13fee20c]" name="preSetup" is-config="true" duration-ms="174" started-at="2021-05-17T11:45:40Z" finished-at="2021-05-17T11:45:40Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preSetup -->
+        <test-method status="PASS" signature="Demo_on_WebWithGuestCheckout()[pri:0, instance:TestSuite.Demo@13fee20c]" name="Demo_on_WebWithGuestCheckout" duration-ms="95980" started-at="2021-05-17T11:45:40Z" finished-at="2021-05-17T11:47:16Z">
+          <reporter-output>
+            <line>
+              <![CDATA[*******************************************************************]]>
+            </line>
+            <line>
+              <![CDATA[TEST CASE : Demo on WebWithGuestCheckout]]>
+            </line>
+            <line>
+              <![CDATA[*******************************************************************]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On SubCategory]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Product]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Addtocart]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On GoToCart]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Increaseqty]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Decreaseqty]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On removeCartq]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On SubCategory]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Product]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Addtocart]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On GoToCart]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Checkout]]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'ps8940@gmail.com' in 'Email']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'TestOrder' in 'SippingName']]>
+            </line>
+            <line>
+              <![CDATA[Clicked On EnterManuallyAddress]]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'testaddress' in 'ShippingAddressLine1']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'test' in 'ShippingAddressLine2']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'newyork' in 'shippingLocality']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  '10052' in 'shippingPostalCode']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  '4111111111111111' in 'cardNumber']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  '03/31' in 'cardExpiry']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  '123' in 'CheckoutCardCvc']]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Proceed to Checkout]]>
+            </line>
+            <line>
+              <![CDATA[GetText OrderConfirmationText]]>
+            </line>
+            <line>
+              <![CDATA[OrderId OrderConfirmationNumber]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- Demo_on_WebWithGuestCheckout -->
+        <test-method status="PASS" signature="Demo_on_Web()[pri:0, instance:TestSuite.Demo@13fee20c]" name="Demo_on_Web" duration-ms="177751" started-at="2021-05-17T11:45:40Z" finished-at="2021-05-17T11:48:38Z">
+          <reporter-output>
+            <line>
+              <![CDATA[*******************************************************************]]>
+            </line>
+            <line>
+              <![CDATA[TEST CASE : Demo on Web]]>
+            </line>
+            <line>
+              <![CDATA[*******************************************************************]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On myAccountOption]]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'User' in 'FirstName']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'Test' in 'LastName']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'ps3@gmail.com' in 'SignupMail']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'Sanvi@123' in 'signupPassword']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'Sanvi@123' in 'Confirm Password']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  '7042117434' in 'PhoneNumber']]>
+            </line>
+            <line>
+              <![CDATA[Clicked On RegisterBtn]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On myAccountOption]]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'User' in 'FirstName']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'Test' in 'LastName']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'ps3@gmail.com' in 'SignupMail']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'Sanvi@123' in 'signupPassword']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'Sanvi@123' in 'Confirm Password']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  '7042117434' in 'PhoneNumber']]>
+            </line>
+            <line>
+              <![CDATA[Clicked On RegisterBtn]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On SubCategory]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Product]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Addtocart]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On GoToCart]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Increaseqty]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Decreaseqty]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On removeCartq]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On SubCategory]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Product]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Addtocart]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On GoToCart]]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Checkout]]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'ps8940@gmail.com' in 'Email']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'TestOrder' in 'SippingName']]>
+            </line>
+            <line>
+              <![CDATA[Clicked On EnterManuallyAddress]]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'testaddress' in 'ShippingAddressLine1']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'test' in 'ShippingAddressLine2']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  'newyork' in 'shippingLocality']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  '10052' in 'shippingPostalCode']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  '4111111111111111' in 'cardNumber']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  '03/31' in 'cardExpiry']]>
+            </line>
+            <line>
+              <![CDATA[Entered value  '123' in 'CheckoutCardCvc']]>
+            </line>
+            <line>
+              <![CDATA[Clicked On Proceed to Checkout]]>
+            </line>
+            <line>
+              <![CDATA[GetText OrderConfirmationText]]>
+            </line>
+            <line>
+              <![CDATA[OrderId OrderConfirmationNumber]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- Demo_on_Web -->
+        <test-method status="PASS" signature="flushExtent()[pri:0, instance:TestSuite.Demo@13fee20c]" name="flushExtent" is-config="true" duration-ms="294" started-at="2021-05-17T11:47:16Z" finished-at="2021-05-17T11:47:17Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- flushExtent -->
+        <test-method status="PASS" signature="flushExtent()[pri:0, instance:TestSuite.Demo@13fee20c]" name="flushExtent" is-config="true" duration-ms="93" started-at="2021-05-17T11:48:38Z" finished-at="2021-05-17T11:48:38Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- flushExtent -->
+      </class> <!-- TestSuite.Demo -->
+    </test> <!-- Command line test -->
+  </suite> <!-- Command line suite -->
+</testng-results>
