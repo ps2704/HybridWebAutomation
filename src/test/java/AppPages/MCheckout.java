@@ -4,8 +4,8 @@ import Data.AccountData;
 import FrameWork.BrowserAction;
 import org.openqa.selenium.WebDriver;
 
-public class Checkout extends BrowserAction {
-    public Checkout(WebDriver driver) {
+public class MCheckout extends BrowserAction {
+    public MCheckout(WebDriver driver) {
 
         this.driver = driver;
     }

@@ -2,6 +2,7 @@ package FrameWork;
 
 import TestSuite.Demo;
 
+import TestSuite.MDemo;
 import com.relevantcodes.extentreports.ExtentTest;
 import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
@@ -24,9 +25,9 @@ public class TestRunner {
             if(System.getProperty("TestGroup")!=null){
                 TestcaseIds= System.getProperty("TestGroup");
             }else {
-                TestcaseIds = "Demo";
+               // TestcaseIds = "MDemotest";
                // TestcaseIds = "BrokenLink";
-                //TestcaseIds = "Demo1";
+                TestcaseIds = "Demo";
             }
             TestListenerAdapter tla = new TestListenerAdapter();
             TestNG testNG =new TestNG();
@@ -46,7 +47,7 @@ public class TestRunner {
 
            // testNG.setThreadCount(2);
             testNG.setVerbose(12);
-            testNG.setTestClasses(new Class[] {Demo.class, Framework.class});
+            testNG.setTestClasses(new Class[] {Demo.class, Framework.class, MDemo.class});
             testNG.run();
         } catch(Exception e){
             System.out.println(e.toString());

@@ -8,6 +8,7 @@ import Pages.*;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.apache.commons.io.FileUtils;
 import org.awaitility.Awaitility;
@@ -63,8 +64,11 @@ public class Demo {
 
     }
 
-    @JiraPolicy(logTicketReady = true)
-    @Test(groups = {"production", "Demo"})
+    @JiraPolicy(logTicketReady = false)
+    @Test(groups = {"production", "Demo"},description = "verifying with register user")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Case Description: Verify login page title test on Login Page")
+    @Story("Story Name: To check login page title")
     public void Demo_on_Web() throws InterruptedException, IOException {
         AccountData Login = Loginsync.getInstance().getLogin();
         //  WebDriver browser = framework.getBrowser("demosite");
@@ -173,8 +177,11 @@ public class Demo {
 
     }
 
-    @JiraPolicy(logTicketReady = true)
-    @Test(groups = {"production", "Demo"})
+    @JiraPolicy(logTicketReady = false)
+    @Test(groups = {"production", "Demo"},description = "verifying with guest user")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Case Description: Verify login page title test on Login Page")
+    @Story("Story Name: To check login page title")
     public void Demo_on_WebWithGuestCheckout()  throws InterruptedException, IOException {
         //  AccountData Login = Loginsync.getInstance().getLogin();
         //  WebDriver browser = framework.getBrowser("demosite");
@@ -203,7 +210,6 @@ public class Demo {
             childTest1.setDescription("This test verifies that user is able to Naviagate to l2 category.");
             TestListner.extentMap.get().put("child", childTest1);
             listingPage.NavigateToL2CategoryList();
-
             ExtentTest childTest2 = testListener.startChild("Navigate to Listing page");
             childTest2.setDescription("This test verifies that user is able to Navigate to Listing page.");
             TestListner.extentMap.get().put("child", childTest2);
@@ -266,6 +272,7 @@ public class Demo {
             System.out.println(e);
         } finally {
             browser.close();
+
         }
 
     }
@@ -487,6 +494,9 @@ public class Demo {
         Framework.extentReports.flush();
     }
 
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Case Description: Verify login page title test on Login Page")
+    @Story("Story Name: To check login page title")
     @Test(groups = {"production", "Demo1"})
     public void brokenLinks() throws Throwable {
         //   WebDriverManager driver = new ChromeDriverManager();

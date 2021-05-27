@@ -4,9 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 @Table
 @Entity
-public class ObjectRepo {
+public class AppObjectRepo {
     @Id
     @Column
     String rowid;

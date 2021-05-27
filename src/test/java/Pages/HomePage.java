@@ -3,41 +3,33 @@ package Pages;
 import Data.AccountData;
 import FrameWork.BrowserAction;
 import FrameWork.Locator;
+import FrameWork.TestListner;
+import FrameWork.TestRunner;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 
 import java.util.List;
-
+@Listeners(TestListner.class)
 public class HomePage extends BrowserAction {
     public HomePage(WebDriver driver) {
 
         this.driver = driver;
     }
 
-//    Locator emailid(){
-//        return new Locator(By.id("email"),"Email");
-//    }
-//    Locator password(){
-//        return new Locator(By.id("passwd"),"password");
-//    }
-//    Locator SubmitButton(){
-//        return new Locator(By.id("SubmitLogin"),"password");
-//    }
-//    Locator Signup_Button(){
-//        return new Locator(By.xpath("//a[contains(text(),'Sign in')]"), "SignIn Button");
-//    }
-
+@Step("Logo validation || Promo validation ||Footer validation || Cart qty validation ")
     public boolean HomePageData() throws Exception {
         Boolean logoPresent = driver.findElement(GetLocator("Logo").getBy()).isDisplayed();
         Assert.assertTrue(logoPresent);
         System.out.println("Logo validation success");
         Thread.sleep(3000);
-
-        Boolean promoPresent = driver.findElement(GetLocator("Promo").getBy()).isDisplayed();
+    Boolean promoPresent = driver.findElement(GetLocator("Promo").getBy()).isDisplayed();
         Assert.assertTrue(promoPresent);
         System.out.println("Promo validation success");
+
         VerifyTextPresent(GetLocator("LogoutText"),"Account");
         Boolean account = driver.findElement(GetLocator("LogoutText").getBy()).isDisplayed();
         Assert.assertTrue(account);

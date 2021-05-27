@@ -1,11 +1,16 @@
 package FrameWork;
-//Author - Sourabh Shreemali
+
 import Data.EnvironmentParameterData;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
+import io.appium.java_client.remote.MobilePlatform;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -36,6 +41,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
 public class Framework {
@@ -43,8 +49,98 @@ public class Framework {
     DataBaseActivity dbActivity = new DataBaseActivity();
     static volatile SessionFactory SessionFactory;
     WebDriver webDriver;
+    //AndroidDriver<MobileElement> androiddriver;
     DesiredCapabilities caps;
     Session session = null;
+
+    public AndroidDriver getAndroidDriver() throws IOException, InterruptedException {
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        AppiumDriverLocalService appiumService = null;
+        String appiumServiceUrl = null;
+        String deviceName = null;
+        AndroidDriver driver = null;
+        if (CommonConstant.Local_run) {
+            deviceName = AdbDevice.getDeviceInstance().getDevice();
+
+            appiumService =getAppiumServiceAnyport(deviceName);
+
+            appiumServiceUrl = appiumService.getUrl().toString();
+            System.out.println("Device NAME ****************" + deviceName);
+            System.out.println("Appium Service Address ************************: - " + appiumServiceUrl);
+            capabilities.setCapability(MobileCapabilityType.UDID, deviceName);
+            capabilities.setCapability(MobileCapabilityType.UDID, "emulator-5554");
+            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Redmi");
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+            capabilities.setCapability(MobileCapabilityType.NO_RESET,"true");
+            capabilities.setCapability(MobileCapabilityType.FULL_RESET,"false");
+            //capabilities.setCapability("appPackage", "com.lezasolutions.boutiqaat");
+            //capabilities.setCapability("appActivity", "com.lezasolutions.boutiqaat.ui.welcome.WelcomeActivity");
+            capabilities.setCapability("appPackage", "com.swaglabsmobileapp");
+            capabilities.setCapability("appActivity", "com.swaglabsmobileapp.SplashActivity");
+            capabilities.setCapability("automationName", "uiautomator2");
+
+            driver = new AndroidDriver<MobileElement>(new URL(appiumServiceUrl), capabilities);
+        }
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        return driver;
+    }
+
+    public IOSDriver<MobileElement> getIOSDriver() throws IOException, InterruptedException {
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        AppiumDriverLocalService appiumService = null;
+        String appiumServiceUrl = null;
+        String deviceName = null;
+        IOSDriver<MobileElement> driver = null;
+        if (CommonConstant.Local_run) {
+            // deviceName = Common_Constants.DeviceName;
+            appiumService =getAppiumServiceAnyport(deviceName);
+            appiumServiceUrl = appiumService.getUrl().toString();
+            System.out.println("Device NAME ****************" + deviceName);
+            System.out.println("Appium Service Address ************************: - " + appiumServiceUrl);
+
+            // need to change the UDID - priority 1
+            // capabilities.setCapability(MobileCapabilityType.UDID, "00008020-00021DCC227A002E");
+            capabilities.setCapability(MobileCapabilityType.UDID, "EBE6B79A-D7DE-4D3D-A932-7046F8D8527E");
+            // capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone XR");
+            // need to change the UDID - priority 2
+            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "iPhone 6 Plus");
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.IOS);
+            capabilities.setCapability(MobileCapabilityType.NO_RESET,true);
+            // capabilities.setCapability(MobileCapabilityType.FULL_RESET,false);
+            // Real device build path
+            // capabilities.setCapability(MobileCapabilityType.APP,"/Users/qateam/Desktop/BetaBuild/Boutiqaat5.8.16.ipa");
+            // Simulator build path
+            capabilities.setCapability(MobileCapabilityType.APP,"/Users/qateam/Desktop/BetaBuild/SimulatorApp/BoutiqaatLatest.app");
+            capabilities.setCapability("automationName", "XCUITEST");
+            // Beta bundle id
+            capabilities.setCapability("bundleId", "com.upgrade.boutiqaat");
+            // Production, Adhoc, Preprod bundle id
+            // capabilities.setCapability("bundleId", "com.leza.Boutiqaat");
+            // need to change the UDID - priority 3
+            capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,"12.1");
+            capabilities.setCapability("useNEWWDA",false);
+
+
+            driver = new IOSDriver<MobileElement>(new URL(appiumServiceUrl), capabilities);
+        }
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        return driver;
+    }
+
+
+    public AppiumDriverLocalService getAppiumServiceAnyport(String DeviceName){
+
+        AppiumDriverLocalService appiumService = AppiumDriverLocalService.buildService(new AppiumServiceBuilder().usingAnyFreePort());
+        if(appiumService.isRunning()){
+            appiumService.stop();
+        }
+
+        // AppiumDriverLocalService appiumService = AppiumDriverLocalService.buildService(new AppiumServiceBuilder().usingDriverExecutable(new File("/usr/local/bin/node")).withIPAddress("127.0.0.1").usingAnyFreePort());
+        appiumService.start();
+        return appiumService;
+    }
 
     public WebDriver getBrowser(String platform) throws Throwable {
 
@@ -149,11 +245,102 @@ public class Framework {
         browsername = pf.getProperty("BrowserName");
         browsername = environmentData.getBrowsername();
         WebDriver driver = null;
-        if (browsername.equalsIgnoreCase("firefox"))
-        //if(true)
-        {/****commented***/
-            // File file = new File("src/test/resources/geckodriver.exe").getCanonicalFile();
-            //System.setProperty("webdriver.gecko.driver", file.getAbsolutePath().replace("\\", "\\\\"));
+
+        if(environmentData.getIsBrowserStack().equalsIgnoreCase("yes")) {
+            if (environmentData.getBrowsername().equalsIgnoreCase("chrome")) {
+               // WebDriverManager.chromedriver().setup();
+                try {
+//
+                    String USERNAME = pf.getProperty("BrowserStackUSERNAME");
+                    String AUTOMATE_KEY = pf.getProperty("BrowserStackAUTOMATE_KEY");
+                    // String url= pf.getProperty("BrowserStackURL");
+                    String url = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
+                    DesiredCapabilities caps = new DesiredCapabilities();
+                    caps.setCapability("browser", "chrome");
+                    caps.setCapability("os", "Windows");
+                    caps.setCapability("os_version", "10");
+                    caps.setCapability("browser_version", "90.0");
+                    webDriver = new RemoteWebDriver(new URL(url), caps);
+                    //   webDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            if (environmentData.getBrowsername() .equalsIgnoreCase("firefox")) {
+               // WebDriverManager.firefoxdriver().setup();
+                try {
+//
+                    String USERNAME = pf.getProperty("BrowserStackUSERNAME");
+                    String AUTOMATE_KEY = pf.getProperty("BrowserStackAUTOMATE_KEY");
+                    // String url= pf.getProperty("BrowserStackURL");
+                    String url = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
+                    DesiredCapabilities caps = new DesiredCapabilities();
+                    caps.setCapability("browser", "firefox");
+                    caps.setCapability("os", "Windows");
+                    caps.setCapability("os_version", "10");
+                    caps.setCapability("browser_version", "latest");
+                    webDriver = new RemoteWebDriver(new URL(url), caps);
+                    //   webDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+            if (environmentData.getBrowsername().equalsIgnoreCase("safari")) {
+                //WebDriverManager.chromedriver().setup();
+                try {
+//
+                    String USERNAME = pf.getProperty("BrowserStackUSERNAME");
+                    String AUTOMATE_KEY = pf.getProperty("BrowserStackAUTOMATE_KEY");
+                    // String url= pf.getProperty("BrowserStackURL");
+                    String url = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
+                    DesiredCapabilities caps = new DesiredCapabilities();
+                    caps.setCapability("browser", "safari");
+                    caps.setCapability("os", "Windows");
+                    caps.setCapability("os_version", "10");
+                    caps.setCapability("browser_version", "latest");
+                    webDriver = new RemoteWebDriver(new URL(url), caps);
+                    //   webDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+        else {
+            if (browsername.equalsIgnoreCase("chrome")) {
+
+                File file;
+                if (System.getProperty("os.name").contains("Mac")) {
+                    // file = new File("src/test/resources/chromedriver").getCanonicalFile();
+                    WebDriverManager.chromedriver().setup();
+                    webDriver.manage().window().maximize();
+                } else {
+                    // file = new File("src/test/resources/chromedriver.exe").getCanonicalFile();
+                    WebDriverManager.chromedriver().setup();
+                    //  webDriver.manage().window().maximize();
+                }
+                //    System.setProperty("webdriver.chrome.driver", file.getAbsolutePath().replace("\\", "\\\\"));
+                //  System.out.println(file.getAbsolutePath().replace("\\", "\\\\"));
+                try {
+                    ChromeOptions options = new ChromeOptions();
+                    options.addArguments("--disable-extensions");
+                    options.addArguments("disable-infobars");
+                    webDriver = new ChromeDriver(options);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                webDriver.manage().window().maximize();
+
+            }
+          else  if (browsername.equalsIgnoreCase("firefox"))
+            //if(true)
+            {/****commented***/
+                // File file = new File("src/test/resources/geckodriver.exe").getCanonicalFile();
+                //System.setProperty("webdriver.gecko.driver", file.getAbsolutePath().replace("\\", "\\\\"));
 //            FirefoxProfile ffprofile = new FirefoxProfile();
 //            DesiredCapabilities capabilities = new DesiredCapabilities();
 //            capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
@@ -163,126 +350,65 @@ public class Framework {
 //            ffprofile.setPreference("dom.webnotifications.enabled", false);
 //            ffprofile.setPreference("security.insecure_field_warning.contextual.enabled", false);
 //            capabilities.setCapability(FirefoxDriver.PROFILE, ffprofile);
-            WebDriverManager.firefoxdriver().setup();
-            webDriver = new FirefoxDriver();
-            //driver = new FirefoxDriver(capabilities);
-          //  webDriver.manage().window().maximize();
-
-        }
-        if (browsername.equalsIgnoreCase("chrome")) {
-
-            File file;
-            if (System.getProperty("os.name").contains("Mac")) {
-                // file = new File("src/test/resources/chromedriver").getCanonicalFile();
-                WebDriverManager.chromedriver().setup();
-                webDriver.manage().window().maximize();
-            } else {
-                // file = new File("src/test/resources/chromedriver.exe").getCanonicalFile();
-                WebDriverManager.chromedriver().setup();
+                WebDriverManager.firefoxdriver().setup();
+                webDriver = new FirefoxDriver();
+                //driver = new FirefoxDriver(capabilities);
                 //  webDriver.manage().window().maximize();
+
             }
-            //    System.setProperty("webdriver.chrome.driver", file.getAbsolutePath().replace("\\", "\\\\"));
-            //  System.out.println(file.getAbsolutePath().replace("\\", "\\\\"));
-            try {
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("--disable-extensions");
-                options.addArguments("disable-infobars");
-                webDriver = new ChromeDriver(options);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+           else if (browsername.equalsIgnoreCase("mobile")) {
+                File file;
+                if (System.getProperty("os.name").contains("Mac")) {
+                    // file = new File("src/test/resources/chromedriver").getCanonicalFile();
+                    //WebDriverManager.chromedriver().setup();
+                    webDriver.manage().window().maximize();
+                } else {
+                    // file = new File("src/test/resources/chromedriver.exe").getCanonicalFile();
+                    WebDriverManager.chromedriver().setup();
+                    //  webDriver.manage().window().maximize();
+                }
+                //    System.setProperty("webdriver.chrome.driver", file.getAbsolutePath().replace("\\", "\\\\"));
+                //  System.out.println(file.getAbsolutePath().replace("\\", "\\\\"));
+                try {
+                    ChromeOptions options = new ChromeOptions();
+                    options.addArguments("--disable-extensions");
+                    options.addArguments("disable-infobars");
+                    webDriver = new ChromeDriver(options);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Dimension d = new Dimension(500, 700);
+                webDriver.manage().window().setSize(d);
+
             }
-            webDriver.manage().window().maximize();
-
-        }
-        if (browsername.equalsIgnoreCase("browserStack")) {
-
-            File file;
-            if (System.getProperty("os.name").contains("Mac")) {
-                // file = new File("src/test/resources/chromedriver").getCanonicalFile();
-                WebDriverManager.chromedriver().setup();
-                webDriver.manage().window().maximize();
-            } else {
-                // file = new File("src/test/resources/chromedriver.exe").getCanonicalFile();
-
-                // caps.setCapability("name", methodName);
-                WebDriverManager.chromedriver().setup();
-
-                //webDriver = new RemoteWebDriver(new URL(URL),caps);
-
-                //  webDriver.manage().window().maximize();
-            }
-            //    System.setProperty("webdriver.chrome.driver", file.getAbsolutePath().replace("\\", "\\\\"));
-            //  System.out.println(file.getAbsolutePath().replace("\\", "\\\\"));
-            try {
-//                ChromeOptions options = new ChromeOptions();
-//                options.addArguments("--disable-extensions");
-//                options.addArguments("disable-infobars");
-//                webDriver = new ChromeDriver(options);
-                String USERNAME = pf.getProperty("BrowserStackUSERNAME");
-                String AUTOMATE_KEY = pf.getProperty("BrowserStackAUTOMATE_KEY");
-               // String url= pf.getProperty("BrowserStackURL");
-                String url = "https://" + USERNAME + ":" + AUTOMATE_KEY + "@hub-cloud.browserstack.com/wd/hub";
-                DesiredCapabilities caps = new DesiredCapabilities();
-                caps.setCapability("browser", "chrome");
-                caps.setCapability("os", "Windows");
-                caps.setCapability("os_version", "10");
-                caps.setCapability("browser_version", "90.0");
-                webDriver = new RemoteWebDriver(new URL(url),caps);
-                //   webDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //  webDriver.manage().window().maximize();
-
-        }
-
-
-        if (browsername.equalsIgnoreCase("mobile")) {
-            File file;
-            if (System.getProperty("os.name").contains("Mac")) {
-                // file = new File("src/test/resources/chromedriver").getCanonicalFile();
-                WebDriverManager.chromedriver().setup();
-                webDriver.manage().window().maximize();
-            } else {
-                // file = new File("src/test/resources/chromedriver.exe").getCanonicalFile();
-                WebDriverManager.chromedriver().setup();
-                //  webDriver.manage().window().maximize();
-            }
-            //    System.setProperty("webdriver.chrome.driver", file.getAbsolutePath().replace("\\", "\\\\"));
-            //  System.out.println(file.getAbsolutePath().replace("\\", "\\\\"));
-            try {
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("--disable-extensions");
-                options.addArguments("disable-infobars");
-                webDriver = new ChromeDriver(options);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Dimension d = new Dimension(500, 700);
-            webDriver.manage().window().setSize(d);
-
-        }
-        if (browsername.equalsIgnoreCase("mobileD")) {
-            File file;
-            if (System.getProperty("os.name").contains("Mac")) {
-                file = new File("src/test/resources/chromedriver").getCanonicalFile();
-            } else {
-                // file = new File("src/test/resources/chromedriver.exe").getCanonicalFile();
-                DesiredCapabilities caps = new DesiredCapabilities();
-                caps.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
-                caps.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
-                caps.setCapability(MobileCapabilityType.VERSION, "6.0");
-                //capabilitiesAndroid.setCapability(CapabilityType.PLATFORM, "Android");
-                caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-                caps.setCapability(MobileCapabilityType.DEVICE_NAME, "pradeep");
-                // common.driver = new RemoteWebDriver(new
-                // URL("http://10.179.111.50:4723/wd/hub"), capabilitiesAndroid);
-                driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), caps);
-                // common.driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilitiesAndroid);
-                // common.driver.manage().timeouts().implicitlyWait(200, TimeUnit.SECONDS);
-                //WebDriverManager.chromedriver().setup();
+          else  if (browsername.equalsIgnoreCase("mobileD")) {
+                File file;
+                if (System.getProperty("os.name").contains("Mac")) {
+                    file = new File("src/test/resources/chromedriver").getCanonicalFile();
+                } else {
+                    // file = new File("src/test/resources/chromedriver.exe").getCanonicalFile();
+                    DesiredCapabilities caps = new DesiredCapabilities();
+                    caps.setCapability(MobileCapabilityType.DEVICE_NAME, "AndroidEmulator");
+                    caps.setCapability(MobileCapabilityType.BROWSER_NAME, "");
+                    caps.setCapability(MobileCapabilityType.VERSION, "11.0");
+                    caps.setCapability(MobileCapabilityType.AUTOMATION_NAME,"UiAutomator2");
+                    //capabilitiesAndroid.setCapability(CapabilityType.PLATFORM, "Android");
+                    caps.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+                    caps.setCapability("appPackage","com.android.calculator2");
+                    caps.setCapability("appActivity","com.android.calculator2.Calculator");
+                    // caps.setCapability(MobileCapabilityType.DEVICE_NAME, "pradeep");
+                    // common.driver = new RemoteWebDriver(new
+                    // URL("http://10.179.111.50:4723/wd/hub"), capabilitiesAndroid);
+                    URL url = new URL("http://127.0.0.1:4723/wd/hub");
+                   // driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), caps);
+                    webDriver = new AndroidDriver<MobileElement>(url,caps);
+                    //androiddriver.get("https://ctdemob2c.anthive.tech/");
+                    //webDriver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), caps);
+                    // common.driver.manage().timeouts().implicitlyWait(200, TimeUnit.SECONDS);
+                    //WebDriverManager.chromedriver().setup();
+                }
             }
         }
 

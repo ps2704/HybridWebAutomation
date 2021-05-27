@@ -5,9 +5,9 @@ import FrameWork.Locator;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
-public class Cart extends BrowserAction {
+public class MCart extends BrowserAction {
 
-    public Cart(WebDriver driver) {
+    public MCart(WebDriver driver) {
 
         this.driver = driver;
     }

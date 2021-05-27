@@ -3,54 +3,20 @@ package Pages;
 import Data.AccountData;
 import FrameWork.BrowserAction;
 import FrameWork.Locator;
+import FrameWork.TestListner;
+import io.qameta.allure.Step;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.Listeners;
 
+@Listeners(TestListner.class)
 public class Checkout extends BrowserAction {
     public Checkout(WebDriver driver) {
 
         this.driver = driver;
     }
-//    Locator cEmail(){
-//        return new Locator(By.xpath("//input[@id='email']"), "Checkout Email");
-//    }
-//    Locator ShippingName(){
-//        return new Locator(By.xpath("//input[@name='shippingName']"), "Checkout SippingName");
-//    }
-//    Locator shippingAddressLine(){
-//        return new Locator(By.xpath("//input[@id='shippingAddressLine1']"), "Checkout ShippingAddressLine1");
-//    }
-//    Locator ShippingAddressLineII(){
-//        return new Locator(By.xpath("//input[@id='shippingAddressLine2']"), "Checkout ShippingAddressLine2");
-//    }
-//    Locator shippingLocality(){
-//        return new Locator(By.xpath("//input[@id='shippingLocality']"), "Checkout shippingLocality");
-//    }
-//    Locator ShippingPostalCode(){
-//        return new Locator(By.xpath("//input[@id='shippingPostalCode']"), "Checkout shippingPostalCode");
-//    }
-//    Locator CardNumber(){
-//        return new Locator(By.xpath("//input[@id='cardNumber']"), "Checkout cardNumber");
-//    }
-//    Locator shippingCardExpiry(){
-//        return new Locator(By.xpath("//input[@id='cardExpiry']"), "Checkout cardExpiry");
-//    }
-//    Locator CardCvc(){
-//        return new Locator(By.xpath("//input[@id='cardCvc']"), "Checkout CheckoutCardCvc");
-//    }
-//    Locator checkoutEnterManuallyAddress(){
-//        return new Locator(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/form/div[1]/div[3]/div[2]/button/div/span"), "Checkout EnterManuallyAddress");
-//    }
-//
-//    Locator PaymentOption(){
-//        return new Locator(By.xpath("//*[@id=\"root\"]/div/div/div[2]/div/form/div[2]/div[5]/button/div[3]"), "Proceed to Checkout");
-//    }
-//    Locator ConfirmOrder(){
-//        return new Locator(By.xpath("//a[contains(text(),'I confirm my order')]"), "I confirm my order");
-//    }
-
-
+    @Step("Shipping information")
     public boolean checkoutPage(AccountData accountData) throws Exception {
         if(!waitUntilDisplayed(GetLocator("PaymentOption"), 2)){
             waitforPageReady();

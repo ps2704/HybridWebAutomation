@@ -1,12 +1,18 @@
 package FrameWork;
 
+import io.qameta.allure.Attachment;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.testng.*;
 import com.relevantcodes.extentreports.ExtentTest;
 
+import java.io.IOException;
+import java.sql.DriverManager;
 import java.util.LinkedHashMap;
 
-public class TestListner extends TestListenerAdapter {
+public class TestListner implements ITestListener {
 
     public static ThreadLocal<ExtentTest> testing = new ThreadLocal<ExtentTest>() {
         @Override
@@ -23,6 +29,23 @@ public class TestListner extends TestListenerAdapter {
 
         }
     };
+
+    @Attachment(value = "Page screenshot", type = "image/png")
+    public byte[] saveScreenshotPNG(WebDriver driver) {
+        return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    // Text attachments for Allure
+    @Attachment(value = "{0}", type = "text/plain")
+    public static String saveTextLog(String message) {
+        return message;
+    }
+
+    // HTML attachments for Allure
+    @Attachment(value = "{0}", type = "text/html")
+    public static String attachHtml(String html) {
+        return html;
+    }
 
     public static ExtentTest getExtentTest() {
         return testing.get();
@@ -98,11 +121,16 @@ public class TestListner extends TestListenerAdapter {
             JiraServiceProvider jiraSp = new JiraServiceProvider("https://testusedjira.atlassian.net",
                     "ps8940@gmail.com", "kNBkKl0zhKQjc5vxGAVyF9B3", "TEST");
             String issueSummary = result.getMethod().getConstructorOrMethod().getMethod().getName()
-                    + "got failed due to some assertion or exception";
+                    +  " got failed due to some assertion or exception";
             String issueDescription = result.getThrowable().getMessage() + "\n";
             issueDescription.concat(ExceptionUtils.getFullStackTrace(result.getThrowable()));
 
             jiraSp.createJiraTicket("Bug", issueSummary, issueDescription, "Pradeep Singh");
+            System.out.println("Screenshot captured for test case:" + result.getMethod());
+            WebDriver driver = null;
+            saveScreenshotPNG(driver);
+
+
             for (String key : extentMap.get().keySet()) {
                 //            System.out.println( key);
                 if (key.contains("child")) {
@@ -114,7 +142,10 @@ public class TestListner extends TestListenerAdapter {
             Framework.extentReports.endTest(TestRunner.parentExtentMap.get(result.getName().replace("_", " ")));
             extentMap.get().clear();
             System.out.println("failed method end");
+            saveTextLog(result.getMethod() + " failed and screenshot taken!");
         }
+
+
 
     }
 
@@ -137,6 +168,11 @@ public class TestListner extends TestListenerAdapter {
 
     public void onStart(ITestContext context) {
         // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onFinish(ITestContext context) {
 
     }
 

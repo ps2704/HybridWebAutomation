@@ -2,10 +2,14 @@ package Pages;
 
 import FrameWork.BrowserAction;
 import FrameWork.Locator;
+import FrameWork.TestListner;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 
+@Listeners(TestListner.class)
 public class Cart extends BrowserAction {
 
     public Cart(WebDriver driver) {
@@ -13,28 +17,7 @@ public class Cart extends BrowserAction {
         this.driver = driver;
     }
 
-//    Locator ProceedToCheckout(){
-//        return new Locator(By.xpath("//a[contains(text(), 'Checkout')]"), "Proceed to Checkout");
-//    }
-//    Locator CartQty(){
-//        return new Locator(By.xpath("//input[@class='input-qty']"), "cartQty");
-//    }
-//    Locator RemoveCartItem(){
-//        return new Locator(By.xpath("//i[@class='fa fa-trash']"), "removeCartq");
-//    }
-//    Locator Increaseqty(){
-//        return new Locator(By.xpath("//div[@class='btn-plus']"), "Increaseqty");
-//    }
-//    Locator decreaseqty(){
-//        return new Locator(By.xpath("//div[@class='btn-minus']"), "Decreaseqty");
-//    }
-//    Locator EmptyCart(){
-//        return new Locator(By.xpath("//p[@class='cart-msg']"), "Emptycart Message");
-//    }
-
-    //input[@class='input-qty']
-
-
+    @Step(" Checkout verification ")
         public boolean Proceedforcheckout() throws IllegalAccessException, InstantiationException, InterruptedException {
         if(!waitUntilDisplayed(GetLocator("Checkout"), 2)){
             waitforPageReady();
@@ -48,6 +31,7 @@ public class Cart extends BrowserAction {
 
         return true;
     }
+    @Step("Verifying update cart funcitonality ")
      public boolean UpdateCart(Locator cartqty ,int count) throws IllegalAccessException, InstantiationException, InterruptedException {
         if(count>0){
             int currentqty = Integer.parseInt(driver.findElement(GetLocator("CartQty").getBy()).getAttribute("value"));
@@ -80,6 +64,7 @@ public class Cart extends BrowserAction {
 
         return false;
      }
+    @Step("cart verificaiton ")
     public boolean CartVerification(int count) throws IllegalAccessException, InstantiationException, InterruptedException {
         // int count = 0;
         UpdateCart(GetLocator("CartQty"),count);

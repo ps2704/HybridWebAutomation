@@ -13,6 +13,7 @@
 
         <mapping class="Data.AccountData"></mapping>
         <mapping class="Data.ObjectRepo"></mapping>
+        <mapping class="Data.AppObjectRepo"></mapping>
         <mapping class="Data.EnvironmentParameterData"></mapping>
         <mapping class="Data.APIData"></mapping>
         <mapping class="Data.APIDetailData"></mapping>

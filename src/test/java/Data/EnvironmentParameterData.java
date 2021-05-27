@@ -16,6 +16,11 @@ public class EnvironmentParameterData {
     String baseurl;
     @Column
     String browsername;
+
+
+
+    @Column
+    String IsBrowserStack;
     @Column
     /**
      * @return the rowid
@@ -68,7 +73,13 @@ public class EnvironmentParameterData {
     /**
      * @return the emailAddress
      */
+    public String getIsBrowserStack() {
+        return IsBrowserStack;
+    }
 
+    public void setIsBrowserStack(String isBrowserStack) {
+        IsBrowserStack = isBrowserStack;
+    }
 
 
 }

@@ -16,43 +16,7 @@ public class MyAccount extends BrowserAction {
 
         this.driver = driver;
     }
-//Locator myAccountOption(){
-//        return new Locator(By.xpath("//*[@id=\"__next\"]/header/nav/div[1]/div/span/div/a"),"MyAccountOption");
-//}
-//    Locator emailid(){
-//        return new Locator(By.id("username"),"Email");
-//    }
-//    Locator password(){
-//        return new Locator(By.id("password"),"password");
-//    }
-//    Locator SubmitButton(){
-//        return new Locator(By.xpath("//*[@id=\"__next\"]/div/div[2]/main/div/form/button[1]"),"Submit Button");
-//    }
-//    Locator Cancel_Button(){
-//        return new Locator(By.xpath("//*[@id=\"__next\"]/div/div[2]/main/div/form/button[2]"), "Cancel Button");
-//    }
-//    Locator firstName(){
-//        return new Locator(By.id("firstName"),"FirstName");
-//    }
-//    Locator lastName(){
-//        return new Locator(By.id("lastName"),"LastName");
-//    }
-//    Locator signupMail(){
-//        return new Locator(By.xpath("//*[@id=\"email\"]"),"SignupMail");
-//    }
-//    Locator signupPassword(){
-//        return new Locator(By.xpath("//form/div[4]/div/input"),"signupPassword");
-//    }
-//
-//    Locator confirmPassword(){
-//        return new Locator(By.id("confirmPassword"),"ConfirmPassword");
-//    }
-//    Locator phoneNumber(){
-//        return new Locator(By.id("mobile"),"PhoneNumber");
-//    }
-//    Locator RegisterBtn(){
-//        return new Locator(By.xpath("//*[@id=\"__next\"]/div/div[3]/main/div/form/button"),"RegistrationBtn");
-//    }
+
 
     public boolean newUserregistration(AccountData accountData) throws InstantiationException, IllegalAccessException, InterruptedException {
         click(GetLocator("myAccountOption"));

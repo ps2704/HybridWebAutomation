@@ -24,7 +24,7 @@
     <div class="top-banner-root">
       <span class="top-banner-title-font">Test results</span>
       <br/>
-      <span class="top-banner-font-1">1 suite</span>
+      <span class="top-banner-font-1">1 suite, 1 failed test</span>
     </div> <!-- top-banner-root -->
     <div class="navigator-root">
       <div class="navigator-suite-header">
@@ -38,7 +38,7 @@
         <div class="rounded-window">
           <div class="suite-header light-rounded-window-top">
             <a href="#" class="navigator-link" panel-name="suite-Command_line_suite">
-              <span class="suite-name border-passed">Command line suite</span>
+              <span class="suite-name border-failed">Command line suite</span>
             </a> <!-- navigator-link -->
           </div> <!-- suite-header light-rounded-window-top -->
           <div class="navigator-suite-content">
@@ -91,7 +91,21 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">2 methods,   2 passed</span>
+                    <span class="method-stats">2 methods, 1 failed,   1 passed</span>
+                  </li>
+                  <li>
+                    <span class="method-list-title failed">Failed methods</span>
+                    <span class="show-or-hide-methods failed">
+                      <a href="#" panel-name="suite-Command_line_suite" class="hide-methods failed suite-Command_line_suite"> (hide)</a> <!-- hide-methods failed suite-Command_line_suite -->
+                      <a href="#" panel-name="suite-Command_line_suite" class="show-methods failed suite-Command_line_suite"> (show)</a> <!-- show-methods failed suite-Command_line_suite -->
+                    </span>
+                    <div class="method-list-content failed suite-Command_line_suite">
+                      <span>
+                        <img width="3%" src="failed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="TestSuite.Demo" hash-for-method="Demo_on_WebWithGuestCheckout">Demo_on_WebWithGuestCheckout</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                    </div> <!-- method-list-content failed suite-Command_line_suite -->
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -103,11 +117,6 @@
                       <span>
                         <img width="3%" src="passed.png"/>
                         <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="TestSuite.Demo" hash-for-method="Demo_on_Web">Demo_on_Web</a> <!-- method navigator-link -->
-                      </span>
-                      <br/>
-                      <span>
-                        <img width="3%" src="passed.png"/>
-                        <a href="#" class="method navigator-link" panel-name="suite-Command_line_suite" title="TestSuite.Demo" hash-for-method="Demo_on_WebWithGuestCheckout">Demo_on_WebWithGuestCheckout</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Command_line_suite -->
@@ -122,6 +131,97 @@
     <div class="wrapper">
       <div class="main-panel-root">
         <div panel-name="suite-Command_line_suite" class="panel Command_line_suite">
+          <div class="suite-Command_line_suite-class-failed">
+            <div class="main-panel-header rounded-window-top">
+              <img src="failed.png"/>
+              <span class="class-name">TestSuite.Demo</span>
+            </div> <!-- main-panel-header rounded-window-top -->
+            <div class="main-panel-content rounded-window-bottom">
+              <div class="method">
+                <div class="method-content">
+                  <a name="Demo_on_WebWithGuestCheckout">
+                  </a> <!-- Demo_on_WebWithGuestCheckout -->
+                  <span class="method-name">Demo_on_WebWithGuestCheckout</span>
+                  <div class="stack-trace">org.openqa.selenium.WebDriverException: Connection refused: connect
+Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
+System info: host: &apos;DESKTOP-SDI2AQA&apos;, ip: &apos;192.168.1.14&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;1.8.0_281&apos;
+Driver info: driver.version: AndroidDriver
+	at io.appium.java_client.remote.AppiumCommandExecutor.lambda$6(AppiumCommandExecutor.java:259)
+	at java.util.Optional.orElseGet(Optional.java:267)
+	at io.appium.java_client.remote.AppiumCommandExecutor.execute(AppiumCommandExecutor.java:258)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:41)
+	at io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)
+	at io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:213)
+	at io.appium.java_client.AppiumDriver.startSession(AppiumDriver.java:338)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:131)
+	at io.appium.java_client.DefaultGenericMobileDriver.&lt;init&gt;(DefaultGenericMobileDriver.java:37)
+	at io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:89)
+	at io.appium.java_client.AppiumDriver.&lt;init&gt;(AppiumDriver.java:99)
+	at io.appium.java_client.android.AndroidDriver.&lt;init&gt;(AndroidDriver.java:96)
+	at FrameWork.Framework.getWebBrowser(Framework.java:406)
+	at TestSuite.Demo.Demo_on_WebWithGuestCheckout(Demo.java:189)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:104)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:645)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:851)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1177)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.net.DualStackPlainSocketImpl.waitForConnect(Native Method)
+	at java.net.DualStackPlainSocketImpl.socketConnect(DualStackPlainSocketImpl.java:81)
+	at java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:476)
+	at java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:218)
+	at java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:200)
+	at java.net.PlainSocketImpl.connect(PlainSocketImpl.java:162)
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:394)
+	at java.net.Socket.connect(Socket.java:606)
+	at okhttp3.internal.platform.Platform.connectSocket(Platform.java:129)
+	at okhttp3.internal.connection.RealConnection.connectSocket(RealConnection.java:245)
+	at okhttp3.internal.connection.RealConnection.connect(RealConnection.java:165)
+	at okhttp3.internal.connection.StreamAllocation.findConnection(StreamAllocation.java:257)
+	at okhttp3.internal.connection.StreamAllocation.findHealthyConnection(StreamAllocation.java:135)
+	at okhttp3.internal.connection.StreamAllocation.newStream(StreamAllocation.java:114)
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.java:42)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:147)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:121)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.java:93)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:147)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:121)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.java:93)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:147)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.java:126)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:147)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.java:121)
+	at okhttp3.RealCall.getResponseWithInterceptorChain(RealCall.java:200)
+	at okhttp3.RealCall.execute(RealCall.java:77)
+	at org.openqa.selenium.remote.internal.OkHttpClient.execute(OkHttpClient.java:103)
+	at io.appium.java_client.remote.AppiumCommandExecutor.lambda$1(AppiumCommandExecutor.java:162)
+	at org.openqa.selenium.remote.ProtocolHandshake.createSession(ProtocolHandshake.java:105)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at io.appium.java_client.remote.AppiumCommandExecutor$1.createSession(AppiumCommandExecutor.java:193)
+	at io.appium.java_client.remote.AppiumCommandExecutor.createSession(AppiumCommandExecutor.java:225)
+	at io.appium.java_client.remote.AppiumCommandExecutor.execute(AppiumCommandExecutor.java:247)
+	... 26 more
+
+</div> <!-- stack-trace -->
+                  <em>
+(verifying with guest user)                  </em>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+            </div> <!-- main-panel-content rounded-window-bottom -->
+          </div> <!-- suite-Command_line_suite-class-failed -->
           <div class="suite-Command_line_suite-class-passed">
             <div class="main-panel-header rounded-window-top">
               <img src="passed.png"/>
@@ -133,13 +233,8 @@
                   <a name="Demo_on_Web">
                   </a> <!-- Demo_on_Web -->
                   <span class="method-name">Demo_on_Web</span>
-                </div> <!-- method-content -->
-              </div> <!-- method -->
-              <div class="method">
-                <div class="method-content">
-                  <a name="Demo_on_WebWithGuestCheckout">
-                  </a> <!-- Demo_on_WebWithGuestCheckout -->
-                  <span class="method-name">Demo_on_WebWithGuestCheckout</span>
+                  <em>
+(verifying with register user)                  </em>
                 </div> <!-- method-content -->
               </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
@@ -162,6 +257,7 @@
     &lt;classes&gt;
       &lt;class name=&quot;TestSuite.Demo&quot;/&gt;
       &lt;class name=&quot;FrameWork.Framework&quot;/&gt;
+      &lt;class name=&quot;TestSuite.MDemo&quot;/&gt;
     &lt;/classes&gt;
   &lt;/test&gt; &lt;!-- Command line test --&gt;
 &lt;/suite&gt; &lt;!-- Command line suite --&gt;
@@ -175,7 +271,7 @@
           <div class="main-panel-content rounded-window-bottom">
             <ul>
               <li>
-                <span class="test-name">Command line test (2 classes)</span>
+                <span class="test-name">Command line test (3 classes)</span>
               </li>
             </ul>
           </div> <!-- main-panel-content rounded-window-bottom -->
@@ -229,16 +325,16 @@ data.addRows(2);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'Demo_on_Web')
 data.setCell(0, 2, 'TestSuite.Demo')
-data.setCell(0, 3, 177751);
+data.setCell(0, 3, 180245);
 data.setCell(1, 0, 1)
 data.setCell(1, 1, 'Demo_on_WebWithGuestCheckout')
 data.setCell(1, 2, 'TestSuite.Demo')
-data.setCell(1, 3, 95980);
+data.setCell(1, 3, 7176);
 window.suiteTableData['Command_line_suite']= { tableData: data, tableDiv: 'times-div-Command_line_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 4 minutes</span>
+              <span class="suite-total-time">Total running time: 3 minutes</span>
               <div id="times-div-Command_line_suite">
               </div> <!-- times-div-Command_line_suite -->
             </div> <!-- times-div -->
@@ -250,11 +346,27 @@ return data;
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="reporter-method-div">
-              <span class="reporter-method-name">Demo_on_WebWithGuestCheckout</span>
+              <span class="reporter-method-name">Demo_on_Web</span>
               <div class="reporter-method-output-div">
                 <span class="reporter-method-output">*******************************************************************</span>
-                <span class="reporter-method-output">TEST CASE : Demo on WebWithGuestCheckout</span>
+                <span class="reporter-method-output">TEST CASE : Demo on Web</span>
                 <span class="reporter-method-output">*******************************************************************</span>
+                <span class="reporter-method-output">Clicked On myAccountOption</span>
+                <span class="reporter-method-output">Entered value  'User' in 'FirstName'</span>
+                <span class="reporter-method-output">Entered value  'Test' in 'LastName'</span>
+                <span class="reporter-method-output">Entered value  'ps9@gmail.com' in 'SignupMail'</span>
+                <span class="reporter-method-output">Entered value  'Sanvi@123' in 'signupPassword'</span>
+                <span class="reporter-method-output">Entered value  'Sanvi@123' in 'Confirm Password'</span>
+                <span class="reporter-method-output">Entered value  '7042117434' in 'PhoneNumber'</span>
+                <span class="reporter-method-output">Clicked On RegisterBtn</span>
+                <span class="reporter-method-output">Clicked On myAccountOption</span>
+                <span class="reporter-method-output">Entered value  'User' in 'FirstName'</span>
+                <span class="reporter-method-output">Entered value  'Test' in 'LastName'</span>
+                <span class="reporter-method-output">Entered value  'ps9@gmail.com' in 'SignupMail'</span>
+                <span class="reporter-method-output">Entered value  'Sanvi@123' in 'signupPassword'</span>
+                <span class="reporter-method-output">Entered value  'Sanvi@123' in 'Confirm Password'</span>
+                <span class="reporter-method-output">Entered value  '7042117434' in 'PhoneNumber'</span>
+                <span class="reporter-method-output">Clicked On RegisterBtn</span>
                 <span class="reporter-method-output">Clicked On SubCategory</span>
                 <span class="reporter-method-output">Clicked On Product</span>
                 <span class="reporter-method-output">Clicked On Addtocart</span>
@@ -283,59 +395,18 @@ return data;
               </div> <!-- reporter-method-output-div -->
             </div> <!-- reporter-method-div -->
             <div class="reporter-method-div">
-              <span class="reporter-method-name">Demo_on_Web</span>
+              <span class="reporter-method-name">Demo_on_WebWithGuestCheckout</span>
               <div class="reporter-method-output-div">
                 <span class="reporter-method-output">*******************************************************************</span>
-                <span class="reporter-method-output">TEST CASE : Demo on Web</span>
+                <span class="reporter-method-output">TEST CASE : Demo on WebWithGuestCheckout</span>
                 <span class="reporter-method-output">*******************************************************************</span>
-                <span class="reporter-method-output">Clicked On myAccountOption</span>
-                <span class="reporter-method-output">Entered value  'User' in 'FirstName'</span>
-                <span class="reporter-method-output">Entered value  'Test' in 'LastName'</span>
-                <span class="reporter-method-output">Entered value  'ps3@gmail.com' in 'SignupMail'</span>
-                <span class="reporter-method-output">Entered value  'Sanvi@123' in 'signupPassword'</span>
-                <span class="reporter-method-output">Entered value  'Sanvi@123' in 'Confirm Password'</span>
-                <span class="reporter-method-output">Entered value  '7042117434' in 'PhoneNumber'</span>
-                <span class="reporter-method-output">Clicked On RegisterBtn</span>
-                <span class="reporter-method-output">Clicked On myAccountOption</span>
-                <span class="reporter-method-output">Entered value  'User' in 'FirstName'</span>
-                <span class="reporter-method-output">Entered value  'Test' in 'LastName'</span>
-                <span class="reporter-method-output">Entered value  'ps3@gmail.com' in 'SignupMail'</span>
-                <span class="reporter-method-output">Entered value  'Sanvi@123' in 'signupPassword'</span>
-                <span class="reporter-method-output">Entered value  'Sanvi@123' in 'Confirm Password'</span>
-                <span class="reporter-method-output">Entered value  '7042117434' in 'PhoneNumber'</span>
-                <span class="reporter-method-output">Clicked On RegisterBtn</span>
-                <span class="reporter-method-output">Clicked On SubCategory</span>
-                <span class="reporter-method-output">Clicked On Product</span>
-                <span class="reporter-method-output">Clicked On Addtocart</span>
-                <span class="reporter-method-output">Clicked On GoToCart</span>
-                <span class="reporter-method-output">Clicked On Increaseqty</span>
-                <span class="reporter-method-output">Clicked On Decreaseqty</span>
-                <span class="reporter-method-output">Clicked On removeCartq</span>
-                <span class="reporter-method-output">Clicked On SubCategory</span>
-                <span class="reporter-method-output">Clicked On Product</span>
-                <span class="reporter-method-output">Clicked On Addtocart</span>
-                <span class="reporter-method-output">Clicked On GoToCart</span>
-                <span class="reporter-method-output">Clicked On Checkout</span>
-                <span class="reporter-method-output">Entered value  'ps8940@gmail.com' in 'Email'</span>
-                <span class="reporter-method-output">Entered value  'TestOrder' in 'SippingName'</span>
-                <span class="reporter-method-output">Clicked On EnterManuallyAddress</span>
-                <span class="reporter-method-output">Entered value  'testaddress' in 'ShippingAddressLine1'</span>
-                <span class="reporter-method-output">Entered value  'test' in 'ShippingAddressLine2'</span>
-                <span class="reporter-method-output">Entered value  'newyork' in 'shippingLocality'</span>
-                <span class="reporter-method-output">Entered value  '10052' in 'shippingPostalCode'</span>
-                <span class="reporter-method-output">Entered value  '4111111111111111' in 'cardNumber'</span>
-                <span class="reporter-method-output">Entered value  '03/31' in 'cardExpiry'</span>
-                <span class="reporter-method-output">Entered value  '123' in 'CheckoutCardCvc'</span>
-                <span class="reporter-method-output">Clicked On Proceed to Checkout</span>
-                <span class="reporter-method-output">GetText OrderConfirmationText</span>
-                <span class="reporter-method-output">OrderId OrderConfirmationNumber</span>
               </div> <!-- reporter-method-output-div -->
             </div> <!-- reporter-method-div -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->
         <div panel-name="ignored-methods-Command_line_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">3 ignored methods</span>
+            <span class="header-content">4 ignored methods</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <div class="ignored-class-div">
@@ -346,6 +417,13 @@ return data;
                 <span class="ignored-method-name">Dependent_APIData</span>
                 <br/>
                 <span class="ignored-method-name">brokenLinks</span>
+                <br/>
+              </div> <!-- ignored-methods-div -->
+            </div> <!-- ignored-class-div -->
+            <div class="ignored-class-div">
+              <span class="ignored-class-name">TestSuite.MDemo</span>
+              <div class="ignored-methods-div">
+                <span class="ignored-method-name">HomePage</span>
                 <br/>
               </div> <!-- ignored-methods-div -->
             </div> <!-- ignored-class-div -->
@@ -367,34 +445,36 @@ return data;
               <div class="chronological-class-name">TestSuite.Demo</div> <!-- chronological-class-name -->
               <div class="configuration-method before">
                 <span class="method-name">preSetup</span>
-                <span class="method-start">5645 ms</span>
+                <span class="method-start">7129 ms</span>
               </div> <!-- configuration-method before -->
               <div class="configuration-method before">
                 <span class="method-name">preSetup</span>
-                <span class="method-start">5645 ms</span>
+                <span class="method-start">7129 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
                 <span class="method-name">Demo_on_Web</span>
-                <span class="method-start">5819 ms</span>
+                <span class="method-start">7412 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
+                <img src="failed.png">
+                </img>
                 <span class="method-name">Demo_on_WebWithGuestCheckout</span>
-                <span class="method-start">5819 ms</span>
+                <span class="method-start">7412 ms</span>
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">flushExtent</span>
-                <span class="method-start">101802 ms</span>
+                <span class="method-start">14610 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-method after">
                 <span class="method-name">flushExtent</span>
-                <span class="method-start">183571 ms</span>
+                <span class="method-start">187847 ms</span>
               </div> <!-- configuration-method after -->
             </div> <!-- chronological-class -->
             <div class="chronological-class">
               <div class="chronological-class-name">FrameWork.Framework</div> <!-- chronological-class-name -->
               <div class="configuration-suite after">
                 <span class="method-name">SessionTearDown</span>
-                <span class="method-start">183699 ms</span>
+                <span class="method-start">188041 ms</span>
               </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

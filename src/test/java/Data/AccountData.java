@@ -47,7 +47,8 @@ public class AccountData {
     @Column
     String CardCvc;
     @Column
-
+    String SignUpSelectGender;
+    @Column
     /**
      * @return the rowid
      */
@@ -227,7 +228,13 @@ public class AccountData {
         CardCvc = cardCvc;
     }
 
+    public String getSignUpSelectGender() {
+        return SignUpSelectGender;
+    }
 
+    public void setSignUpSelectGender(String signUpSelectGender) {
+        SignUpSelectGender = signUpSelectGender;
+    }
 
 }
 
