@@ -4,6 +4,7 @@ import Data.AccountData;
 import FrameWork.BrowserAction;
 import FrameWork.Locator;
 import FrameWork.Locator_Excel;
+import com.relevantcodes.extentreports.ExtentTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -18,7 +19,7 @@ public class MyAccount extends BrowserAction {
     }
 
 
-    public boolean newUserregistration(AccountData accountData) throws InstantiationException, IllegalAccessException, InterruptedException {
+    public boolean newUserregistration(ExtentTest extentTest, AccountData accountData) throws InstantiationException, IllegalAccessException, InterruptedException {
         click(GetLocator("myAccountOption"));
         waitUntilDisplayed(GetLocator("emailid"), 10);
         EnterValue(GetLocator("firstName"), accountData.getFirstName());
@@ -40,9 +41,8 @@ public class MyAccount extends BrowserAction {
         Thread.sleep(5000);
         VerifyPageTitle("MyAccount | AntHive Store");
         VerifyPageUrl("anthive");
-
+        BooleanAsseration(true, extentTest, "Registration Successful", "Registration Unsuccessful");
         return true;
-
     }
 
     public boolean UserSignIn(AccountData accountData) throws IllegalAccessException, InstantiationException {
@@ -56,28 +56,28 @@ public class MyAccount extends BrowserAction {
 
     }
 
-    public boolean MyAccountValidation( ) throws IllegalAccessException, InstantiationException, InterruptedException {
+    public boolean MyAccountValidation(ExtentTest extentTest ) throws IllegalAccessException, InstantiationException, InterruptedException {
         List<WebElement> SizeDropDownOptions = driver.findElements(GetLocator("MyAccountcontent").getBy());
         System.out.println(SizeDropDownOptions.size());
         for (WebElement webElement : SizeDropDownOptions) {
             String name = webElement.getText();
             System.out.println(name);
-            VerifyTextPresent(GetLocator("MyProfileText"),"My Profile");
+            VerifyTextPresent(extentTest, GetLocator("MyProfileText"),"My Profile");
             Thread.sleep(2000);
             click(GetLocator("OrderHistory"));
-            VerifyTextPresent(GetLocator("YourOrderText"),"Your Orders");
+            VerifyTextPresent(extentTest,GetLocator("YourOrderText"),"Your Orders");
             Thread.sleep(2000);
             click(GetLocator("ManageAddress"));
-            VerifyTextPresent(GetLocator("ManageAddressText"),"Manage Addresses");
+            VerifyTextPresent(extentTest,GetLocator("ManageAddressText"),"Manage Addresses");
             Thread.sleep(2000);
             click(GetLocator("PaymentMethod"));
-            VerifyTextPresent(GetLocator("ManagePaymnetText"),"Payment Methods");
+            VerifyTextPresent(extentTest,GetLocator("ManagePaymnetText"),"Payment Methods");
             Thread.sleep(2000);
             click(GetLocator("Wishlist"));
-            VerifyTextPresent(GetLocator("ManageWishlistText"),"Wish List");
+            VerifyTextPresent(extentTest,GetLocator("ManageWishlistText"),"Wish List");
             Thread.sleep(2000);
             click(GetLocator("Logout"));
-            VerifyTextPresent(GetLocator("LogoutText"),"Account");
+            VerifyTextPresent(extentTest,GetLocator("LogoutText"),"Account");
             Thread.sleep(2000);
 
         }

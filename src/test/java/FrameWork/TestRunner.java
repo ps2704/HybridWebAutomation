@@ -8,7 +8,7 @@ import org.testng.TestListenerAdapter;
 import org.testng.TestNG;
 import org.testng.annotations.Test;
 import org.testng.xml.XmlSuite;
-import sun.misc.Cache;
+//import sun.misc.Cache;
 
 import java.util.HashMap;
 
@@ -25,16 +25,17 @@ public class TestRunner {
             if(System.getProperty("TestGroup")!=null){
                 TestcaseIds= System.getProperty("TestGroup");
             }else {
-               // TestcaseIds = "MDemotest";
-               // TestcaseIds = "BrokenLink";
-                TestcaseIds = "Demo";
+              //  TestcaseIds = "MDemotest";
+                 //TestcaseIds = "APIDemo";
+               // TestcaseIds = "BrokenLink1";
+               TestcaseIds = "Demo";
             }
             TestListenerAdapter tla = new TestListenerAdapter();
             TestNG testNG =new TestNG();
             TestListner testListner = new TestListner();
             testNG.addListener(testListner);
-           // testNG.setParallel(XmlSuite.ParallelMode.TESTS);
-            testNG.setThreadCount(2);
+            // testNG.setParallel(XmlSuite.ParallelMode.TESTS);
+            testNG.setThreadCount(1);
             if(System.getProperty("TestGroup")!=null){
                 testNG.setGroups(System.getProperty("TestGroup"));
             }else {
@@ -43,9 +44,9 @@ public class TestRunner {
             }
             testNG.setParallel(XmlSuite.ParallelMode.METHODS);
 
-            testNG.setDataProviderThreadCount(2);
+          //  testNG.setDataProviderThreadCount(2);
 
-           // testNG.setThreadCount(2);
+            // testNG.setThreadCount(2);
             testNG.setVerbose(12);
             testNG.setTestClasses(new Class[] {Demo.class, Framework.class, MDemo.class});
             testNG.run();

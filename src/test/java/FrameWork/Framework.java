@@ -29,6 +29,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.*;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.Reporter;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -53,37 +54,127 @@ public class Framework {
     DesiredCapabilities caps;
     Session session = null;
 
-    public AndroidDriver getAndroidDriver() throws IOException, InterruptedException {
-
+    //    public AndroidDriver getAndroidDriver() throws IOException, InterruptedException {
+//
+//        DesiredCapabilities capabilities = new DesiredCapabilities();
+//        AppiumDriverLocalService appiumService = null;
+//        String appiumServiceUrl = null;
+//        String deviceName = null;
+//        AndroidDriver driver = null;
+//        if (CommonConstant.Local_run) {
+//            deviceName = AdbDevice.getDeviceInstance().getDevice();
+//
+//            appiumService =getAppiumServiceAnyport(deviceName);
+//
+//            appiumServiceUrl = appiumService.getUrl().toString();
+//            System.out.println("Device NAME ****************" + deviceName);
+//            System.out.println("Appium Service Address ************************: - " + appiumServiceUrl);
+//            capabilities.setCapability(MobileCapabilityType.UDID, deviceName);
+////            capabilities.setCapability(MobileCapabilityType.UDID, "emulator-5554");
+//            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Redmi");
+//            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+//            capabilities.setCapability(MobileCapabilityType.NO_RESET,"true");
+//            capabilities.setCapability(MobileCapabilityType.FULL_RESET,"false");
+//            //capabilities.setCapability("appPackage", "com.lezasolutions.boutiqaat");
+//            //capabilities.setCapability("appActivity", "com.lezasolutions.boutiqaat.ui.welcome.WelcomeActivity");
+//            capabilities.setCapability("appPackage", "com.swaglabsmobileapp");
+//            capabilities.setCapability("appActivity", "com.swaglabsmobileapp.SplashActivity");
+//            capabilities.setCapability("automationName", "uiautomator2");
+//
+//            driver = new AndroidDriver<MobileElement>(new URL(appiumServiceUrl), capabilities);
+//        }
+//        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+//        return driver;
+//    }
+    public AndroidDriver getAppDevice(String platform) throws IOException, InterruptedException {
+        if (platform == null) {
+            platform = "App";
+        }
+        String DeviceName;
+        EnvironmentParameterData environmentData = getData(EnvironmentParameterData.class, platform);
+        PropertyConfiguration propertyConfig = new PropertyConfiguration();
+        Properties pf = propertyConfig.getInstance();
+        DeviceName = pf.getProperty("DeviceName");
+        DeviceName = environmentData.getDeviceName();
         DesiredCapabilities capabilities = new DesiredCapabilities();
         AppiumDriverLocalService appiumService = null;
         String appiumServiceUrl = null;
         String deviceName = null;
         AndroidDriver driver = null;
-        if (CommonConstant.Local_run) {
-            deviceName = AdbDevice.getDeviceInstance().getDevice();
+        // WebDriver driver = null;
+        if (environmentData.getIsBrowserStack().equalsIgnoreCase("yes")) {
+            if (environmentData.getBrowsername().equalsIgnoreCase("Android")) {
 
-            appiumService =getAppiumServiceAnyport(deviceName);
+                String USERNAME = pf.getProperty("BrowserStackUSERNAME");
+                String AUTOMATE_KEY = pf.getProperty("BrowserStackAUTOMATE_KEY");
+                String APP_Id = pf.getProperty("APPID");
+                String BR_Url = pf.getProperty("BRURL");
+//        if (environmentData.getIsBrowserStack().equalsIgnoreCase("yes")) {
+//            if (environmentData.getDeviceName().equalsIgnoreCase("Android")) {
+                if (CommonConstant.Local_run) {
+                    DesiredCapabilities caps = new DesiredCapabilities();
+                    caps.setCapability("browserstack.user", USERNAME);
+                    caps.setCapability("browserstack.key", AUTOMATE_KEY);
 
-            appiumServiceUrl = appiumService.getUrl().toString();
-            System.out.println("Device NAME ****************" + deviceName);
-            System.out.println("Appium Service Address ************************: - " + appiumServiceUrl);
-            capabilities.setCapability(MobileCapabilityType.UDID, deviceName);
-            capabilities.setCapability(MobileCapabilityType.UDID, "emulator-5554");
-            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Redmi");
-            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
-            capabilities.setCapability(MobileCapabilityType.NO_RESET,"true");
-            capabilities.setCapability(MobileCapabilityType.FULL_RESET,"false");
-            //capabilities.setCapability("appPackage", "com.lezasolutions.boutiqaat");
-            //capabilities.setCapability("appActivity", "com.lezasolutions.boutiqaat.ui.welcome.WelcomeActivity");
-            capabilities.setCapability("appPackage", "com.swaglabsmobileapp");
-            capabilities.setCapability("appActivity", "com.swaglabsmobileapp.SplashActivity");
-            capabilities.setCapability("automationName", "uiautomator2");
+                    // Set URL of the application under test
+                    caps.setCapability("app", APP_Id);
+                    caps.setCapability("autoDismissAlerts", true);
+                    // Specify device and os_version for testing
+                    caps.setCapability("device", "Google Pixel 3");
+                    caps.setCapability("os_version", "9.0");
+//                capabilities.setCapability("appPackage", "com.swaglabsmobileapp");
+//                capabilities.setCapability("appActivity", "com.swaglabsmobileapp.SplashActivity");
+                    // Set other BrowserStack capabilities
+                    caps.setCapability("project", "AnthiveApp_Demo");
+                    //caps.setCapability("build", "Java Android");
+                    caps.setCapability("name", "AnthiveApp_Demo");
 
-            driver = new AndroidDriver<MobileElement>(new URL(appiumServiceUrl), capabilities);
+
+                    // Initialise the remote Webdriver using BrowserStack remote URL
+                    // and desired capabilities defined above
+                    driver = new AndroidDriver<MobileElement>(
+                            new URL(BR_Url), caps);
+
+
+                    //driver = new AndroidDriver<MobileElement>(new URL(appiumServiceUrl), capabilities);
+
+                }
+            }
+
+            driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+            return driver;
+
         }
+        else if ((environmentData.getDeviceName().equalsIgnoreCase("Android"))) {
+            if (CommonConstant.Local_run) {
+                deviceName = AdbDevice.getDeviceInstance().getDevice();
+
+                appiumService =getAppiumServiceAnyport(deviceName);
+
+                appiumServiceUrl = appiumService.getUrl().toString();
+                System.out.println("Device NAME ****************" + deviceName);
+                System.out.println("Appium Service Address ************************: - " + appiumServiceUrl);
+                capabilities.setCapability(MobileCapabilityType.UDID, deviceName);
+//            capabilities.setCapability(MobileCapabilityType.UDID, "emulator-5554");
+                capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Redmi");
+                capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
+                capabilities.setCapability(MobileCapabilityType.NO_RESET,"true");
+                capabilities.setCapability(MobileCapabilityType.FULL_RESET,"false");
+                capabilities.setCapability(MobileCapabilityType.SUPPORTS_ALERTS, true);
+                //capabilities.setCapability("appPackage", "com.lezasolutions.boutiqaat");
+                //capabilities.setCapability("appActivity", "com.lezasolutions.boutiqaat.ui.welcome.WelcomeActivity");
+                capabilities.setCapability("appPackage", "com.swaglabsmobileapp");
+                capabilities.setCapability("appActivity", "com.swaglabsmobileapp.SplashActivity");
+                capabilities.setCapability("automationName", "uiautomator2");
+
+                driver = new AndroidDriver<MobileElement>(new URL(appiumServiceUrl), capabilities);
+            }
+        }
+
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         return driver;
+
+
     }
 
     public IOSDriver<MobileElement> getIOSDriver() throws IOException, InterruptedException {
@@ -142,90 +233,90 @@ public class Framework {
         return appiumService;
     }
 
-    public WebDriver getBrowser(String platform) throws Throwable {
-
-		/* DesiredCapabilities caps = new DesiredCapabilities();
-		    caps.setCapability("browser", "chrome");
-		    caps.setCapability("browserstack.debug", "true");
-		    caps.setCapability("build", "First build");
-
-		    WebDriver driver = new RemoteWebDriver(new URL(URL),caps);*/
-        if (platform == null) {
-            platform = "Web";
-        }
-        String browsername;
-        EnvironmentParameterData environmentData = getData(EnvironmentParameterData.class, platform);
-        PropertyConfiguration propertyConfig = new PropertyConfiguration();
-        Properties pf = propertyConfig.getInstance();
-        browsername = pf.getProperty("BrowserName");
-        browsername = environmentData.getBrowsername();
-        WebDriver driver = null;
-        if (browsername.equalsIgnoreCase("firefox"))
-        //if(true)
-        {/****commented***/
-            File file = new File("src/test/resources/geckodriver.exe").getCanonicalFile();
-            System.setProperty("webdriver.gecko.driver", file.getAbsolutePath().replace("\\", "\\\\"));
-            FirefoxProfile ffprofile = new FirefoxProfile();
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-            ffprofile.setAcceptUntrustedCertificates(true);
-            capabilities.setCapability("acceptInsecureCerts", true);
-            ffprofile.setAssumeUntrustedCertificateIssuer(true);
-            ffprofile.setPreference("dom.webnotifications.enabled", false);
-            ffprofile.setPreference("security.insecure_field_warning.contextual.enabled", false);
-            capabilities.setCapability(FirefoxDriver.PROFILE, ffprofile);
-            driver = new FirefoxDriver(capabilities);
-            driver.manage().window().maximize();
-
-        }
-        if (browsername.equalsIgnoreCase("chrome")) {
-
-            File file;
-            if (System.getProperty("os.name").contains("Mac")) {
-                file = new File("src/test/resources/chromedriver").getCanonicalFile();
-            } else {
-                file = new File("src/test/resources/chromedriver").getCanonicalFile();
-            }
-            System.setProperty("webdriver.chrome.driver", file.getAbsolutePath().replace("\\", "\\\\"));
-            System.out.println(file.getAbsolutePath().replace("\\", "\\\\"));
-            try {
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("--disable-extensions");
-                options.addArguments("disable-infobars");
-                driver = new ChromeDriver(options);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            driver.manage().window().maximize();
-
-        }
-
-        if (browsername.equalsIgnoreCase("mobile")) {
-            File file;
-            if (System.getProperty("os.name").contains("Mac")) {
-                file = new File("src/test/resources/chromedriver").getCanonicalFile();
-            } else {
-                file = new File("src/test/resources/chromedriver.exe").getCanonicalFile();
-            }
-            System.setProperty("webdriver.chrome.driver", file.getAbsolutePath().replace("\\", "\\\\"));
-            System.out.println(file.getAbsolutePath().replace("\\", "\\\\"));
-            try {
-                ChromeOptions options = new ChromeOptions();
-                options.addArguments("--user-agent=Mozilla/5.0 (Linux; Android 6.0; HTC One M9 Build/MRA58K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36");
-                options.addArguments("--start-maximized");
-                options.addArguments("disable-infobars");
-                driver = new ChromeDriver(options);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Dimension d = new Dimension(500, 700);
-            driver.manage().window().setSize(d);
-
-        }
-
-        return driver;
-    }
+//    public WebDriver getBrowser(String platform) throws Throwable {
+//
+//		/* DesiredCapabilities caps = new DesiredCapabilities();
+//		    caps.setCapability("browser", "chrome");
+//		    caps.setCapability("browserstack.debug", "true");
+//		    caps.setCapability("build", "First build");
+//
+//		    WebDriver driver = new RemoteWebDriver(new URL(URL),caps);*/
+//        if (platform == null) {
+//            platform = "Web";
+//        }
+//        String browsername;
+//        EnvironmentParameterData environmentData = getData(EnvironmentParameterData.class, platform);
+//        PropertyConfiguration propertyConfig = new PropertyConfiguration();
+//        Properties pf = propertyConfig.getInstance();
+//        browsername = pf.getProperty("BrowserName");
+//        browsername = environmentData.getBrowsername();
+//        WebDriver driver = null;
+//        if (browsername.equalsIgnoreCase("firefox"))
+//        //if(true)
+//        {/****commented***/
+//            File file = new File("src/test/resources/geckodriver.exe").getCanonicalFile();
+//            System.setProperty("webdriver.gecko.driver", file.getAbsolutePath().replace("\\", "\\\\"));
+//            FirefoxProfile ffprofile = new FirefoxProfile();
+//            DesiredCapabilities capabilities = new DesiredCapabilities();
+//            capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+//            ffprofile.setAcceptUntrustedCertificates(true);
+//            capabilities.setCapability("acceptInsecureCerts", true);
+//            ffprofile.setAssumeUntrustedCertificateIssuer(true);
+//            ffprofile.setPreference("dom.webnotifications.enabled", false);
+//            ffprofile.setPreference("security.insecure_field_warning.contextual.enabled", false);
+//            capabilities.setCapability(FirefoxDriver.PROFILE, ffprofile);
+//            driver = new FirefoxDriver(capabilities);
+//            driver.manage().window().maximize();
+//
+//        }
+//        if (browsername.equalsIgnoreCase("chrome")) {
+//
+//            File file;
+//            if (System.getProperty("os.name").contains("Mac")) {
+//                file = new File("src/test/resources/chromedriver").getCanonicalFile();
+//            } else {
+//                file = new File("src/test/resources/chromedriver").getCanonicalFile();
+//            }
+//            System.setProperty("webdriver.chrome.driver", file.getAbsolutePath().replace("\\", "\\\\"));
+//            System.out.println(file.getAbsolutePath().replace("\\", "\\\\"));
+//            try {
+//                ChromeOptions options = new ChromeOptions();
+//                options.addArguments("--disable-extensions");
+//                options.addArguments("disable-infobars");
+//                driver = new ChromeDriver(options);
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            driver.manage().window().maximize();
+//
+//        }
+//
+//        if (browsername.equalsIgnoreCase("mobile")) {
+//            File file;
+//            if (System.getProperty("os.name").contains("Mac")) {
+//                file = new File("src/test/resources/chromedriver").getCanonicalFile();
+//            } else {
+//                file = new File("src/test/resources/chromedriver.exe").getCanonicalFile();
+//            }
+//            System.setProperty("webdriver.chrome.driver", file.getAbsolutePath().replace("\\", "\\\\"));
+//            System.out.println(file.getAbsolutePath().replace("\\", "\\\\"));
+//            try {
+//                ChromeOptions options = new ChromeOptions();
+//                options.addArguments("--user-agent=Mozilla/5.0 (Linux; Android 6.0; HTC One M9 Build/MRA58K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.98 Mobile Safari/537.36");
+//                options.addArguments("--start-maximized");
+//                options.addArguments("disable-infobars");
+//                driver = new ChromeDriver(options);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            Dimension d = new Dimension(500, 700);
+//            driver.manage().window().setSize(d);
+//
+//        }
+//
+//        return driver;
+//    }
 
     public WebDriver getWebBrowser(String platform) throws IOException {
 
@@ -248,7 +339,7 @@ public class Framework {
 
         if(environmentData.getIsBrowserStack().equalsIgnoreCase("yes")) {
             if (environmentData.getBrowsername().equalsIgnoreCase("chrome")) {
-               // WebDriverManager.chromedriver().setup();
+                // WebDriverManager.chromedriver().setup();
                 try {
 //
                     String USERNAME = pf.getProperty("BrowserStackUSERNAME");
@@ -268,7 +359,7 @@ public class Framework {
 
             }
             if (environmentData.getBrowsername() .equalsIgnoreCase("firefox")) {
-               // WebDriverManager.firefoxdriver().setup();
+                // WebDriverManager.firefoxdriver().setup();
                 try {
 //
                     String USERNAME = pf.getProperty("BrowserStackUSERNAME");
@@ -336,7 +427,7 @@ public class Framework {
                 webDriver.manage().window().maximize();
 
             }
-          else  if (browsername.equalsIgnoreCase("firefox"))
+            else  if (browsername.equalsIgnoreCase("firefox"))
             //if(true)
             {/****commented***/
                 // File file = new File("src/test/resources/geckodriver.exe").getCanonicalFile();
@@ -357,7 +448,7 @@ public class Framework {
 
             }
 
-           else if (browsername.equalsIgnoreCase("mobile")) {
+            else if (browsername.equalsIgnoreCase("mobile")) {
                 File file;
                 if (System.getProperty("os.name").contains("Mac")) {
                     // file = new File("src/test/resources/chromedriver").getCanonicalFile();
@@ -383,7 +474,7 @@ public class Framework {
                 webDriver.manage().window().setSize(d);
 
             }
-          else  if (browsername.equalsIgnoreCase("mobileD")) {
+            else  if (browsername.equalsIgnoreCase("mobileD")) {
                 File file;
                 if (System.getProperty("os.name").contains("Mac")) {
                     file = new File("src/test/resources/chromedriver").getCanonicalFile();
@@ -402,7 +493,7 @@ public class Framework {
                     // common.driver = new RemoteWebDriver(new
                     // URL("http://10.179.111.50:4723/wd/hub"), capabilitiesAndroid);
                     URL url = new URL("http://127.0.0.1:4723/wd/hub");
-                   // driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), caps);
+                    // driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), caps);
                     webDriver = new AndroidDriver<MobileElement>(url,caps);
                     //androiddriver.get("https://ctdemob2c.anthive.tech/");
                     //webDriver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"), caps);
@@ -529,6 +620,41 @@ public class Framework {
         //gs.clearField(Worksheet2,"Msite" ,"AutomationResult");
     }
 
+    public void killDriverProcess() throws IOException
+    {
+        try {
+            String command = "TASKKILL /F /IM chromedriver.exe";
+            Process p = Runtime.getRuntime().exec(command);
+            p.destroy();
+            p.destroyForcibly();
+            System.exit(0);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+
+    public void logErrorWithSnapshot(WebDriver browser, Throwable e) throws IOException {
+        TestListner.testing.get().log(LogStatus.ERROR, e.getMessage());
+        try {
+            TestListner.testing.get().log(LogStatus.INFO, TestListner.testing.get().addBase64ScreenShot("data:image/png;base64," + captureScreenshot(browser)));
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public String captureScreenshot(WebDriver browser) throws IOException {
+        File scrFile = ((TakesScreenshot) browser).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(scrFile, new File(new File("test-output").getAbsolutePath() + File.separator
+                + Reporter.getCurrentTestResult().getMethod().getMethodName() + ".jpg"));
+        String scrBase64Image = ((TakesScreenshot) browser).getScreenshotAs(OutputType.BASE64);
+        Reporter.log(
+                "<br> <img src=\"data:image/png;base64," + scrBase64Image + "\" height=\"700\" width=\"800\"> <br>");
+        //System.out.println("<img src=�data:image/png;base64," + scrBase64Image + "�>");
+        Reporter.log(browser.getCurrentUrl());
+        return scrBase64Image;
+    }
 
     public <T> List<T>  getIndependentAPIdata(Class clazz, String ID) {
         List<T> listOfhibernateData = new ArrayList<T>();
@@ -576,6 +702,8 @@ public class Framework {
 		SessionFactory.close();
 	}*/
 
+
+
     public <T> List<T> getdependentAPIdata(Class clazz, String ID) {
         List<T> listOfhibernateData = new ArrayList<T>();
         try {
@@ -617,7 +745,7 @@ public class Framework {
         extentReports.flush();
         //extentReports.close();
         SessionFactory.close();
-       // dbActivity.dropTableFromGsheet();
+        // dbActivity.dropTableFromGsheet();
         //dbActivity.afterTest();
 
         System.out.println(SessionFactory.isClosed());

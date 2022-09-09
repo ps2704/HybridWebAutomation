@@ -5,6 +5,7 @@ import Data.ObjectRepo;
 import FrameWork.*;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
@@ -23,6 +24,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 
 import java.io.IOException;
@@ -33,11 +35,17 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class AppAction {
-
+    public boolean runStatus;
+    public String errorMessage;
+    public String ResultMessage;
+    public String exceptionBuffer = "";
+    public String errorBuffer = "";
+    public String failureSeverity;
+SoftAssert Assert = new SoftAssert();
     protected  AppiumDriver<MobileElement> driver;
 
     static int DefaultTime = 30;
-    protected void click(Locator locator){
+    protected boolean click(Locator locator){
         WebDriverWait webdriverWait = new WebDriverWait(driver, DefaultTime);
         if (locator.getElement() == null) {
             webdriverWait.until(ExpectedConditions.elementToBeClickable(locator.getBy()));
@@ -51,6 +59,7 @@ public class AppAction {
             element.click();
         }
         TestListner.testing.get().log(LogStatus.INFO, "Clicked On " + locator.getName());
+        return  true;
     }
 
 
@@ -165,9 +174,11 @@ public class AppAction {
             if(locator.getElement()==null) {
                 WebElement webElement = driver.findElement(locator.getBy());
                 Text = webElement.getText();
+                System.out.println("*** Data is ** == >> " + Text);
             }else{
                 WebElement webElement = locator.getElement().findElement(locator.getBy());
                 Text = webElement.getText();
+                System.out.println("*** Data is ** == >> " + Text);
             }
             return Text;
         } catch (Exception e) {
@@ -176,24 +187,27 @@ public class AppAction {
         }
         return Text;
     }
-    public void VerifyTextPresent(Locator locator, String text) {
+    public boolean VerifyTextPresent(ExtentTest extentTest,Locator locator, String text) {
         System.out.println("String Passed: "+text);
         String strText = text.toLowerCase();
+        String presentText;
         try {
             // System.out.println(driver.findElement(By.xpath(xpathKey)).getText().toLowerCase());
             if (locator != null) {
-                String presentText = driver.findElement(locator.getBy()).getText().toLowerCase();
+                 presentText = driver.findElement(locator.getBy()).getText().toLowerCase();
                 System.out.println("String from locator: "+presentText);
-                Assert.assertTrue(presentText.contains(strText));
+              //  Assert.assertTrue(presentText.contains(strText));
             } else {
-                String presentText = driver.findElement(By.xpath("//body")).getText().toLowerCase();
-                Assert.assertTrue(presentText.contains(strText));
+                 presentText = driver.findElement(By.xpath("//body")).getText().toLowerCase();
+               // Assert.assertTrue(presentText.contains(strText));
             }
+            BooleanAsseration(presentText.contains(strText),extentTest, "Text is present", "Text is not Present");
         } catch (Exception e) { e.printStackTrace();
         } catch (AssertionError e) {
             e.printStackTrace();
-        }
+        }return true;
     }
+
     protected List<String> getMultipleText(Locator locator){
         List<String> Text= new ArrayList<String>();
         try {
@@ -221,13 +235,48 @@ public class AppAction {
     }
 
 
-    public void getElementList(Locator locator) throws Exception {
+    public boolean getElementList(Locator locator) throws Exception {
         List<MobileElement> SizeDropDownOptions = driver.findElements(locator.getBy());
         System.out.println(SizeDropDownOptions.size());
-        for (MobileElement webElement : SizeDropDownOptions) {
-            String name = webElement.getText();
-            System.out.println(name);
-        }}
+        for (MobileElement mElement : SizeDropDownOptions) {
+            System.out.println("**** Item List **** " + mElement.getText());
+
+                    }return true;
+    }
+
+    //List<MobileElement> allCheckBoxes=driver.findElementsByXPath("//*[@class='android.widget.CheckBox']");
+    public void VerifyAlert(String text) {
+        try {
+
+            if (text != "") {
+                WebDriverWait wait = new WebDriverWait(driver, 2);
+                wait.until(ExpectedConditions.alertIsPresent());
+                Alert alert = driver.switchTo().alert();
+                String presentText = alert.getText();
+                alert.accept();
+                Assert.assertTrue(presentText.contains(text));
+
+            } else {
+                runStatus = false;
+                errorMessage = errorMessage + "\n\n" + "Object xpath or id not found in excel";
+            }
+        } catch (Exception e) {
+            runStatus = false;
+            errorMessage = errorMessage + "\n\n" + "Object not found to perform Verify Alert operation, " + text
+                    + ", Page URL -" + driver.getCurrentUrl();
+            failureSeverity = "P1";
+            exceptionBuffer = e.getMessage();
+            e.printStackTrace();
+        } catch (AssertionError e) {
+            runStatus = false;
+            errorMessage = errorMessage + "\n\n" + "Verify Alert failed, Text to verify - " + text + ", Xpath - " + text
+                    + ", Page URL -" + driver.getCurrentUrl();
+            failureSeverity = "P3";
+            errorBuffer = e.getMessage();
+            e.printStackTrace();
+        }
+    }
+
 
     protected boolean isDisplayed(Locator locator){
 
@@ -317,7 +366,7 @@ public class AppAction {
 
     public void ScrollDown(int ScrollCount) {
         Dimension dimensions = driver.manage().window().getSize();
-        int size = dimensions.width/2;
+        int size = dimensions.width/4;
         int scrollStartt = (int) (dimensions.getHeight() * 0.9);
         int scrollEnd = (int)(dimensions.getHeight() * 0.25);
         for (int x = 1; x <= ScrollCount; x++) {
@@ -335,6 +384,12 @@ public class AppAction {
             return new Locator(By.xpath(locatordata.getlocator_value()), locatordata.getlocator_name_for_reporting());
         }
     }
-
+    public void BooleanAsseration(Boolean condition, ExtentTest extentTest, String pass, String fail){
+        if(condition){
+            extentTest.log(LogStatus.PASS, pass);
+        }else {
+            extentTest.log(LogStatus.FAIL, fail);
+        }
+    }
 
 }

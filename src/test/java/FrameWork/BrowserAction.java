@@ -1,6 +1,7 @@
 package FrameWork;
 
 import Data.ObjectRepo;
+import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,12 +15,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.asserts.SoftAssert;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class BrowserAction {
-
+    SoftAssert Assert = new SoftAssert();
     protected WebDriver driver;
     static int DefaultTime = 60;
     public boolean runStatus;
@@ -162,19 +164,22 @@ public class BrowserAction {
 
 
     }
-    public void VerifyTextPresent(Locator locator, String text) {
+    public void VerifyTextPresent(ExtentTest extentTest,Locator locator, String text) {
         System.out.println("String Passed: "+text);
         String strText = text.toLowerCase();
+        String presentText;
         try {
             // System.out.println(driver.findElement(By.xpath(xpathKey)).getText().toLowerCase());
             if (locator != null) {
-                String presentText = driver.findElement(locator.getBy()).getText().toLowerCase();
+                presentText = driver.findElement(locator.getBy()).getText().toLowerCase();
                 System.out.println("String from locator: "+presentText);
-                Assert.assertTrue(presentText.contains(strText));
+                //Assert.assertTrue(presentText.contains(strText));
             } else {
-                String presentText = driver.findElement(By.xpath("//body")).getText().toLowerCase();
-                Assert.assertTrue(presentText.contains(strText));
+                presentText = driver.findElement(By.xpath("//body")).getText().toLowerCase();
+                //Assert.assertTrue(presentText.contains(strText));
             }
+            BooleanAsseration(presentText.contains(strText),extentTest, "Text is present", "Text is not Present");
+
         } catch (Exception e) {
             runStatus = false;
             errorMessage = errorMessage + "\n\n" + "Object not found to perform VerifyText operation, - " + locator
@@ -470,5 +475,12 @@ public class BrowserAction {
         }
     }
 
+    public void BooleanAsseration(Boolean condition, ExtentTest extentTest, String pass, String fail){
+        if(condition){
+            extentTest.log(LogStatus.PASS, pass);
+        }else {
+            extentTest.log(LogStatus.FAIL, fail);
+        }
+    }
 
 }

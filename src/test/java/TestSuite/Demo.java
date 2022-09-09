@@ -43,7 +43,7 @@ public class Demo {
 
     @BeforeMethod(alwaysRun = true)
     public void preSetup() {
-        environmentData = framework.getData(EnvironmentParameterData.class, "demosite");
+        environmentData = framework.getData(EnvironmentParameterData.class, "api");
         baseUrl = environmentData.getBaseurl();
         Awaitility.reset();
         Awaitility.setDefaultPollDelay(100, TimeUnit.MILLISECONDS);
@@ -64,14 +64,15 @@ public class Demo {
 
     }
 
-    @JiraPolicy(logTicketReady = false)
-    @Test(groups = {"production", "Demo"},description = "verifying with register user")
+    @JiraPolicy(logTicketReady = true)
+    @Test(groups = {"production", "Demo"},description = "verifying with register checkout  user flow")
     @Severity(SeverityLevel.NORMAL)
     @Description("Test Case Description: Verify login page title test on Login Page")
     @Story("Story Name: To check login page title")
-    public void Demo_on_Web() throws InterruptedException, IOException {
+    public void Demo_on_Web() throws Throwable {
+        environmentData = framework.getData(EnvironmentParameterData.class, "demosite");
+        baseUrl = environmentData.getBaseurl();
         AccountData Login = Loginsync.getInstance().getLogin();
-        //  WebDriver browser = framework.getBrowser("demosite");
         WebDriver browser = framework.getWebBrowser("demosite");
         try {
             browser.get(baseUrl);
@@ -85,76 +86,75 @@ public class Demo {
             OrderConfirmation ordercon = new OrderConfirmation(browser);
             Checkout checkout = new Checkout(browser);
 
-            ExtentTest childTest = testListener.startChild("Existing User Login test");
-            childTest.setDescription("This test verifies that user is able to login with existing credentials.");
-            TestListner.extentMap.get().put("child", childTest);
-
             ExtentTest childTest1 = testListener.startChild("Home Page validation");
             childTest1.setDescription("This test verifies that user is able see logo and promo text.");
-            TestListner.extentMap.get().put("child", childTest1);
-            homePageData.HomePageData();
+            TestListner.extentMap.get().put("child1", childTest1);
+            Boolean Ishomedataverified = homePageData.HomePageData(childTest1);
 
+          //  Sancs.assertTrue(Ishomedataverified, "Yes It's Verify");
             ExtentTest childTest2 = testListener.startChild("New registration");
             childTest2.setDescription("This test verifies that user is able to register.");
-            TestListner.extentMap.get().put("child", childTest2);
-            myaccount.newUserregistration(testdata);
+            TestListner.extentMap.get().put("child2", childTest2);
+            Boolean IsUserRegistered = myaccount.newUserregistration(childTest2,testdata);
 
-            ExtentTest childTest3 = testListener.startChild("MyAccount validation");
-            childTest3.setDescription("This test verifies that user is able to register.");
-            TestListner.extentMap.get().put("child", childTest3);
-            myaccount.MyAccountValidation();
-            myaccount.newUserregistration(testdata);
-            // myaccount.UserSignIn(testdata1);
-            //Thread.sleep(5000);
+            ExtentTest childTest13 = testListener.startChild("My Account validation");
+            childTest13.setDescription("This test verifies that user is able validate my account.");
+            TestListner.extentMap.get().put("childTest13", childTest2);
+            Boolean IsMyaccountvalidate = myaccount.MyAccountValidation(childTest13);
+
             ExtentTest childTest4 = testListener.startChild("Naviagting to l2 category");
             childTest4.setDescription("This test verifies that user is able to Naviagate to l2 category.");
-            TestListner.extentMap.get().put("child", childTest4);
-            listingPage.NavigateToL2CategoryList();
+            TestListner.extentMap.get().put("child4", childTest4);
+            Boolean IsNavigationtocat2done = listingPage.NavigateToL2CategoryList(childTest4);
+            //Sancs.assertTrue(IsNavigationtocat2done, "Navigation Successfully");
 
             ExtentTest childTest5 = testListener.startChild("Navigate to Listing page");
             childTest5.setDescription("This test verifies that user is able to Navigate to Listing page.");
-            TestListner.extentMap.get().put("child", childTest5);
-            listingPage.PlpItems();
+            TestListner.extentMap.get().put("child5", childTest5);
+           Boolean IsNavigationtolistingPagedone = listingPage.PlpItems(childTest5);
+           // Sancs.assertTrue(IsNavigationtolistingPagedone, "Navigation Successful");
 
             ExtentTest childTest6 = testListener.startChild("Navigate to PDP page");
             childTest6.setDescription("This test verifies that user is able to Navigate to PDP page.");
-            TestListner.extentMap.get().put("child", childTest6);
-            listingPage.ClickPlpItems();
-
+            TestListner.extentMap.get().put("child6", childTest6);
+            Boolean IsPDPNavigationDone = listingPage.ClickPlpItems(childTest6);
+            //Sancs.assertTrue(IsPDPNavigationDone, "Navigation Successful");
             //cart.VerifyCartCountAfterAdd();
             ExtentTest childTest7 = testListener.startChild("Increase the Cart Qty");
             childTest7.setDescription("This test verifies that user is able to Increase the Cart Qty.");
-            TestListner.extentMap.get().put("child", childTest7);
-            cart.CartVerification(1);
+            TestListner.extentMap.get().put("child7", childTest7);
+            Boolean IsPDPQTYincreased= cart.CartVerification(childTest7,1);
 
             ExtentTest childTest8 = testListener.startChild("Decrease the Cart Qty");
             childTest8.setDescription("This test verifies that user is able to Decrease the Cart Qty.");
-            TestListner.extentMap.get().put("child", childTest8);
-            cart.CartVerification(-1);
+            TestListner.extentMap.get().put("child8", childTest8);
+            Boolean IsPDPQTYDecreased=cart.CartVerification(childTest8,-1);
+            //Boolean IsPDPQTYDecreased= cart.CartVerification(childTest8,);
 
             ExtentTest childTest9 = testListener.startChild("Remove the Cart Qty");
             childTest9.setDescription("This test verifies that user is able to Remove the Cart Qty.");
-            TestListner.extentMap.get().put("child", childTest9);
-            cart.CartVerification(0);
+            TestListner.extentMap.get().put("child9", childTest9);
+            //cart.CartVerification(childTest9,0);
+            Boolean IsPDPQTYdeleted= cart.CartVerification(childTest9,0);
 
-            listingPage.NavigateToL2CategoryList();
-
-            listingPage.ClickPlpItems();
+            Boolean IsNavigationtocat2done2 = listingPage.NavigateToL2CategoryList(childTest9);
+            Boolean Isplpitemclicked2=listingPage.ClickPlpItems(childTest9);
 
             ExtentTest childTest10 = testListener.startChild("Proceed to Checkout");
             childTest10.setDescription("This test verifies that user is able to Proceed to Checkout.");
-            TestListner.extentMap.get().put("child", childTest10);
-            cart.Proceedforcheckout();
+            TestListner.extentMap.get().put("child10", childTest10);
+            Boolean IsProceedForCheckout= cart.Proceedforcheckout(childTest10);
+
 
             ExtentTest childTest11 = testListener.startChild("Proceed to Shipping and payment page");
             childTest11.setDescription("This test verifies that user is able to Proceed to Shipping and payment page.");
-            TestListner.extentMap.get().put("child", childTest11);
-            checkout.checkoutPage(testdata);
+            TestListner.extentMap.get().put("child11", childTest11);
+            Boolean IsProceedForshippingPage= checkout.checkoutPage(testdata);
 
             ExtentTest childTest12 = testListener.startChild("Order Confirmation Page");
             childTest12.setDescription("This test verifies that user is able to Proceed to Order Confirmation Page. ");
-            TestListner.extentMap.get().put("child", childTest12);
-            ordercon.OrderConfirmNumber();
+            TestListner.extentMap.get().put("child12", childTest12);
+            Boolean OrderConfrimation= ordercon.OrderConfirmNumber();
             // ordercon.StoreDynamicDataOrderId();
             // Cart cart = new Cart(browser);
             // Checkout checkout = new Checkout(browser);
@@ -171,6 +171,7 @@ public class Demo {
 
         } catch (Exception e) {
             System.out.println(e);
+            framework.logErrorWithSnapshot(browser,e);
         } finally {
             browser.close();
         }
@@ -178,18 +179,20 @@ public class Demo {
     }
 
     @JiraPolicy(logTicketReady = false)
-    @Test(groups = {"production", "Demo"},description = "verifying with guest user")
+    @Test(groups = {"production", "Demo1"},description = "verifying with guest user flow")
     @Severity(SeverityLevel.NORMAL)
     @Description("Test Case Description: Verify login page title test on Login Page")
     @Story("Story Name: To check login page title")
     public void Demo_on_WebWithGuestCheckout()  throws InterruptedException, IOException {
         //  AccountData Login = Loginsync.getInstance().getLogin();
         //  WebDriver browser = framework.getBrowser("demosite");
-        Thread.sleep(5000);
+       // Thread.sleep(5000);
+        environmentData = framework.getData(EnvironmentParameterData.class, "demosite1");
+        baseUrl = environmentData.getBaseurl();
         WebDriver browser = framework.getWebBrowser("demosite1");
         try {
             browser.get(baseUrl);
-            AccountData testdata = framework.getData(AccountData.class, "loginset1");
+            AccountData testdata = framework.getData(AccountData.class, "loginset");
             //  AccountData testdata1 = framework.getData(AccountData.class, "loginset1");
             // HomePage homePage = new HomePage(browser);
             MyAccount myaccount = new MyAccount(browser);
@@ -198,62 +201,66 @@ public class Demo {
             Cart cart = new Cart(browser);
             OrderConfirmation ordercon = new OrderConfirmation(browser);
             Checkout checkout = new Checkout(browser);
-            ExtentTest childTest = testListener.startChild("Existing User Login test");
-            childTest.setDescription("This test verifies that user is able to login with existing credentials.");
-            TestListner.extentMap.get().put("child", childTest);
-            // myaccount.UserRegistration(testdata);
-            // myaccount.UserSignIn(testdata1);
-            homePageData.HomePageData();
+
+            ExtentTest childTest1 = testListener.startChild("Existing User Login test");
+            childTest1.setDescription("This test verifies that user is able to login with existing credentials.");
+            TestListner.extentMap.get().put("child1", childTest1);
+            Boolean Ishomedataverified = homePageData.HomePageData(childTest1);
 
             Thread.sleep(5000);
-            ExtentTest childTest1 = testListener.startChild("Naviagting to l2 category");
-            childTest1.setDescription("This test verifies that user is able to Naviagate to l2 category.");
-            TestListner.extentMap.get().put("child", childTest1);
-            listingPage.NavigateToL2CategoryList();
-            ExtentTest childTest2 = testListener.startChild("Navigate to Listing page");
-            childTest2.setDescription("This test verifies that user is able to Navigate to Listing page.");
-            TestListner.extentMap.get().put("child", childTest2);
-            listingPage.PlpItems();
+            ExtentTest childTest2 = testListener.startChild("Naviagting to l2 category");
+            childTest2.setDescription("This test verifies that user is able to Naviagate to l2 category.");
+            TestListner.extentMap.get().put("childTest2", childTest2);
+            Boolean IsNavigationtocat2done = listingPage.NavigateToL2CategoryList(childTest2);
+            //Sancs.assertTrue(IsNavigationtocat2done, "Navigation Successfully");
 
-            ExtentTest childTest3 = testListener.startChild("Navigate to PDP page");
-            childTest3.setDescription("This test verifies that user is able to Navigate to PDP page.");
-            TestListner.extentMap.get().put("child", childTest3);
-            listingPage.ClickPlpItems();
+            ExtentTest childTest3 = testListener.startChild("Navigate to Listing page");
+            childTest3.setDescription("This test verifies that user is able to Navigate to Listing page.");
+            TestListner.extentMap.get().put("childTest3", childTest3);
+            Boolean IsNavigationtolistingPagedone = listingPage.PlpItems(childTest3);
+            // Sancs.assertTrue(IsNavigationtolistingPagedone, "Navigation Successful");
 
+            ExtentTest childTest4 = testListener.startChild("Navigate to PDP page");
+            childTest4.setDescription("This test verifies that user is able to Navigate to PDP page.");
+            TestListner.extentMap.get().put("childTest4", childTest4);
+            Boolean IsPDPNavigationDone = listingPage.ClickPlpItems(childTest4);
+            //Sancs.assertTrue(IsPDPNavigationDone, "Navigation Successful");
             //cart.VerifyCartCountAfterAdd();
-            ExtentTest childTest4 = testListener.startChild("Increase the Cart Qty");
-            childTest4.setDescription("This test verifies that user is able to Increase the Cart Qty.");
-            TestListner.extentMap.get().put("child", childTest4);
-            cart.CartVerification(1);
+            ExtentTest childTest5 = testListener.startChild("Increase the Cart Qty");
+            childTest5.setDescription("This test verifies that user is able to Increase the Cart Qty.");
+            TestListner.extentMap.get().put("childTest5", childTest5);
+            Boolean IsPDPQTYincreased= cart.CartVerification(childTest5,1);
 
-            ExtentTest childTest5 = testListener.startChild("Decrease the Cart Qty");
-            childTest5.setDescription("This test verifies that user is able to Decrease the Cart Qty.");
-            TestListner.extentMap.get().put("child", childTest5);
-            cart.CartVerification(-1);
+            ExtentTest childTest6 = testListener.startChild("Decrease the Cart Qty");
+            childTest6.setDescription("This test verifies that user is able to Decrease the Cart Qty.");
+            TestListner.extentMap.get().put("childTest6", childTest6);
+            //cart.CartVerification(childTest6,-1);
+            Boolean IsPDPQTYDecreased= cart.CartVerification(childTest6,1);
 
-            ExtentTest childTest6 = testListener.startChild("Remove the Cart Qty");
-            childTest6.setDescription("This test verifies that user is able to Remove the Cart Qty.");
-            TestListner.extentMap.get().put("child", childTest6);
-            cart.CartVerification(0);
+            ExtentTest childTest7 = testListener.startChild("Remove the Cart Qty");
+            childTest7.setDescription("This test verifies that user is able to Remove the Cart Qty.");
+            TestListner.extentMap.get().put("childTest7", childTest7);
+            //cart.CartVerification(childTest7,0);
+            Boolean IsPDPQTYdeleted= cart.CartVerification(childTest7,1);
 
-            listingPage.NavigateToL2CategoryList();
+            listingPage.NavigateToL2CategoryList(childTest7);
 
-            listingPage.ClickPlpItems();
+            listingPage.ClickPlpItems(childTest7);
 
-            ExtentTest childTest7 = testListener.startChild("Proceed to Checkout");
-            childTest7.setDescription("This test verifies that user is able to Proceed to Checkout.");
-            TestListner.extentMap.get().put("child", childTest7);
-            cart.Proceedforcheckout();
+            ExtentTest childTest8 = testListener.startChild("Proceed to Checkout");
+            childTest8.setDescription("This test verifies that user is able to Proceed to Checkout.");
+            TestListner.extentMap.get().put("childTest8", childTest8);
+            Boolean IsProceedForCheckout= cart.Proceedforcheckout(childTest8);
 
-            ExtentTest childTest8 = testListener.startChild("Proceed to Shipping and payment page");
-            childTest8.setDescription("This test verifies that user is able to Proceed to Shipping and payment page.");
-            TestListner.extentMap.get().put("child", childTest8);
-            checkout.checkoutPage(testdata);
+            ExtentTest childTest9 = testListener.startChild("Proceed to Shipping and payment page");
+            childTest9.setDescription("This test verifies that user is able to Proceed to Shipping and payment page.");
+            TestListner.extentMap.get().put("childTest9", childTest9);
+            Boolean IsProceedForshippingPage= checkout.checkoutPage(testdata);
 
-            ExtentTest childTest9 = testListener.startChild("Order Confirmation Page");
-            childTest9.setDescription("This test verifies that user is able to Proceed to Order Confirmation Page. ");
-            TestListner.extentMap.get().put("child", childTest9);
-            ordercon.OrderConfirmNumber();
+            ExtentTest childTest10 = testListener.startChild("Order Confirmation Page");
+            childTest10.setDescription("This test verifies that user is able to Proceed to Order Confirmation Page. ");
+            TestListner.extentMap.get().put("childTest10", childTest10);
+            Boolean OrderConfrimation= ordercon.OrderConfirmNumber();
             // ordercon.StoreDynamicDataOrderId();
             // Cart cart = new Cart(browser);
             // Checkout checkout = new Checkout(browser);
@@ -345,7 +352,7 @@ public class Demo {
                 }
                 apiDetailData.setParameter(parameter);
                 if (Token == "") {
-                    Token = method.GetToken(environmentData, framework);
+                   // Token = method.GetToken(environmentData, framework);
                     Token = Token.replaceAll("\"", "");
                     //Token = URLEncoder.encode(Token,"UTF-8");
                 }
@@ -497,8 +504,8 @@ public class Demo {
     @Severity(SeverityLevel.NORMAL)
     @Description("Test Case Description: Verify login page title test on Login Page")
     @Story("Story Name: To check login page title")
-    @Test(groups = {"production", "Demo1"})
-    public void brokenLinks() throws Throwable {
+    @Test(groups = {"production", "BrokenLink"})
+    public void brokenLinks() throws MalformedURLException,IOException {
         //   WebDriverManager driver = new ChromeDriverManager();
         WebDriver browser = framework.getWebBrowser("demosite");
 
@@ -517,7 +524,8 @@ public class Demo {
 
         for (int i = 0; i < links.size(); i++) {
             System.out.println(links.get(i).getAttribute("href"));
-            if (links.get(i).getAttribute("href") != null) {
+
+            if (links.get(i).getAttribute("href") != null && (! links.get(i).getAttribute("href").contains(" "))) {
                 activelinks.add(links.get(i));
             }
 //                WebElement ele= links.get(i);
@@ -537,6 +545,46 @@ public class Demo {
             System.out.println(activelinks.get(j).getAttribute("href") + "----->>" + response);
         }
 
+    }
+
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Test Case Description: Verify login page title test on Login Page")
+    @Story("Story Name: To check login page title")
+    @Test(groups = {"production", "BrokenLink1"})
+    public void brokenLinks1() throws Throwable {
+        //   WebDriverManager driver = new ChromeDriverManager();
+        WebDriver browser = framework.getWebBrowser("demosite");
+
+        browser.get(baseUrl);
+        List <WebElement> allLinks = browser.findElements(By.tagName("a"));
+        System.out.println("# Links: " + allLinks.size());
+
+try {
+    int i = 1;
+
+    for (WebElement link : allLinks) {
+        String url = link.getAttribute("href");
+       // System.out.println("# Links: " + url);
+
+        if (url != null && !url.contains("javascript")) {
+            // Establish A Connection To The URL
+            HttpURLConnection connection =
+                    (HttpURLConnection) new URL(url).openConnection();
+            connection.connect();
+
+            // Get The Response Codes & Response Messages
+            int responseCode = connection.getResponseCode();
+            String responseMessage = connection.getResponseMessage();
+
+            System.out.println(i + ". " + url +
+                    "\n \t" + responseCode + "\n \t" + responseMessage);
+            i++;
+            connection.disconnect();
+        }
+    }
+} catch (MalformedURLException  e) {
+    e.printStackTrace();
+}
     }
 
 
@@ -633,7 +681,7 @@ public class Demo {
 
                     }
                     if (Token == "") {
-                        Token = method.GetToken(environmentData, frameWork);
+                       // Token = method.GetToken(environmentData, frameWork);
                         Token = Token.replaceAll("\"", "");
                         //Token = URLEncoder.encode(Token,"UTF-8");
                     }

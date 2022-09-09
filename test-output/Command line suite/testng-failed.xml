@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="2" verbose="12" name="Failed suite [Command line suite]" parallel="methods" data-provider-thread-count="2">
+<suite thread-count="1" verbose="12" name="Failed suite [Command line suite]" parallel="methods">
   <test name="Command line test(failed)" parallel="methods">
     <groups>
       <run>
-        <include name="Demo"/>
+        <include name="APIDemo"/>
       </run>
     </groups>
     <classes>
+      <class name="TestSuite.Demo">
+        <methods>
+          <include name="Indepenet_API" invocation-numbers="0"/>
+          <include name="Dependent_APIData"/>
+          <include name="preSetup"/>
+          <include name="flushExtent"/>
+        </methods>
+      </class> <!-- TestSuite.Demo -->
       <class name="FrameWork.Framework">
         <methods>
           <include name="SessionTearDown"/>
           <include name="beforeSuite"/>
         </methods>
       </class> <!-- FrameWork.Framework -->
-      <class name="TestSuite.Demo">
-        <methods>
-          <include name="preSetup"/>
-          <include name="flushExtent"/>
-          <include name="Demo_on_WebWithGuestCheckout"/>
-        </methods>
-      </class> <!-- TestSuite.Demo -->
     </classes>
   </test> <!-- Command line test(failed) -->
 </suite> <!-- Failed suite [Command line suite] -->

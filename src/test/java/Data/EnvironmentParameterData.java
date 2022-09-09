@@ -17,7 +17,8 @@ public class EnvironmentParameterData {
     @Column
     String browsername;
 
-
+    @Column
+    String DeviceName;
 
     @Column
     String IsBrowserStack;
@@ -81,6 +82,12 @@ public class EnvironmentParameterData {
         IsBrowserStack = isBrowserStack;
     }
 
+    public String getDeviceName() {
+        return DeviceName;
+    }
 
+    public void setDeviceName(String deviceName) {
+        DeviceName = deviceName;
+    }
 }
 

@@ -5,9 +5,7 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gdata.client.spreadsheet.SpreadsheetService;
-import com.google.gdata.data.spreadsheet.CellFeed;
-import com.google.gdata.data.spreadsheet.SpreadsheetEntry;
-import com.google.gdata.data.spreadsheet.SpreadsheetFeed;
+import com.google.gdata.data.spreadsheet.*;
 import com.google.gdata.util.ServiceException;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
@@ -61,6 +59,60 @@ public class GoogleSheets {
                 .setServiceAccountScopes(SCOPES).build();
 
         return credential;
+    }
+
+    public URL getFeedFromSheet(SpreadsheetEntry spreadsheet, String Sheetname) throws IOException, ServiceException {
+        WorksheetEntry sheet = null;
+        for (WorksheetEntry sheetEntry : spreadsheet.getWorksheets()) {
+            if (sheetEntry.getTitle().getPlainText().equalsIgnoreCase(Sheetname)) {
+                sheet = sheetEntry;
+            }
+
+        }
+
+        return sheet.getListFeedUrl();
+
+
+    }
+
+    public void updateResultField(String CaseID, SpreadsheetEntry spreadsheet, String sheetName, String Status, String resultFieldName) throws Throwable, IOException, URISyntaxException {
+
+        URL listFeedUrl = getFeedFromSheet(spreadsheet, sheetName);
+        ListFeed listOfRow = service.getFeed(listFeedUrl, ListFeed.class);
+
+        for (ListEntry row : listOfRow.getEntries()) {
+            if (row.getCustomElements().getValue("TestCaseID") != null) {
+                if (row.getCustomElements().getValue("TestCaseID").trim().equalsIgnoreCase(CaseID)) {
+                    System.out.println("Result updated in gooogle sheet");
+                    row.getCustomElements().setValueLocal(resultFieldName, Status);
+
+                    row.update();
+                    break;
+                }
+            }
+
+        }
+
+    }
+
+    public String getFieldValue(String CaseID, SpreadsheetEntry spreadsheet, String sheetName, String FieldName) throws Throwable, Throwable {
+        String Value = null;
+        URL listFeedUrl = getFeedFromSheet(spreadsheet, sheetName);
+        ListFeed listOfRow = service.getFeed(listFeedUrl, ListFeed.class);
+
+        for (ListEntry row : listOfRow.getEntries()) {
+            if (row.getCustomElements().getValue("TestCaseID") != null) {
+                if (row.getCustomElements().getValue("TestCaseID").trim().equalsIgnoreCase(CaseID)) {
+                    //System.out.println("Result updated in gooogle sheet");
+                    Value = row.getCustomElements().getValue(FieldName);
+
+                    break;
+                }
+            }
+
+        }
+
+        return Value;
     }
 
 

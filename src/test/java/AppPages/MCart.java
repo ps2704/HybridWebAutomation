@@ -1,27 +1,31 @@
 package AppPages;
 
+import FrameWork.AppAction;
 import FrameWork.BrowserAction;
 import FrameWork.Locator;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
-public class MCart extends BrowserAction {
+public class MCart extends AppAction {
 
-    public MCart(WebDriver driver) {
+    public MCart(AppiumDriver<MobileElement> driver) {
 
         this.driver = driver;
     }
 
 
         public boolean Proceedforcheckout() throws IllegalAccessException, InstantiationException, InterruptedException {
-        if(!waitUntilDisplayed(GetLocator("Checkout"), 2)){
-            waitforPageReady();
+        if(!waitUntilDisplayed(GetLocator("checkout"), 2)){
+           // waitforPageReady();
             click(GetLocator("Checkout"));
         }
         int count = 0;
         //VerifyCartCountAfterAdd(CartQty(),count);
         Thread.sleep(5000);
-        click(GetLocator("Checkout"));
+        getText(GetLocator("carttext"));
+        click(GetLocator("checkout"));
         Thread.sleep(5000);
 
         return true;

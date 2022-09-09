@@ -1,5 +1,7 @@
 package FrameWork;
 
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
 import io.qameta.allure.Attachment;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.openqa.selenium.OutputType;
@@ -7,12 +9,13 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.testng.*;
 import com.relevantcodes.extentreports.ExtentTest;
+import org.testng.TestListenerAdapter;
 
 import java.io.IOException;
 import java.sql.DriverManager;
-import java.util.LinkedHashMap;
+import java.util.*;
 
-public class TestListner implements ITestListener {
+public class TestListner extends TestListenerAdapter {
 
     public static ThreadLocal<ExtentTest> testing = new ThreadLocal<ExtentTest>() {
         @Override
@@ -34,6 +37,10 @@ public class TestListner implements ITestListener {
     public byte[] saveScreenshotPNG(WebDriver driver) {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
+//    @Attachment(value = "Page screenshot", type = "image/png")
+//    public byte[] saveScreenshotPNG1(AndroidDriver<MobileElement> driver1) {
+//        return ((TakesScreenshot) driver1).getScreenshotAs(OutputType.BYTES);
+//    }
 
     // Text attachments for Allure
     @Attachment(value = "{0}", type = "text/plain")
@@ -46,6 +53,7 @@ public class TestListner implements ITestListener {
     public static String attachHtml(String html) {
         return html;
     }
+
 
     public static ExtentTest getExtentTest() {
         return testing.get();
@@ -128,7 +136,9 @@ public class TestListner implements ITestListener {
             jiraSp.createJiraTicket("Bug", issueSummary, issueDescription, "Pradeep Singh");
             System.out.println("Screenshot captured for test case:" + result.getMethod());
             WebDriver driver = null;
+           // AndroidDriver driver1 = null;
             saveScreenshotPNG(driver);
+            //saveScreenshotPNG1(driver1);
 
 
             for (String key : extentMap.get().keySet()) {
@@ -171,10 +181,45 @@ public class TestListner implements ITestListener {
 
     }
 
-    @Override
-    public void onFinish(ITestContext context) {
+  //  @Override
+    /*public void onFinish(ITestContext testContext) {
 
-    }
+        super.onFinish(testContext);
+
+        // List of test results which we will delete later
+        List<ITestResult> testsToBeRemoved = new ArrayList<ITestResult>();
+
+        // collect all id's from passed test
+        Set<Integer> passedTestIds = new HashSet<Integer>();
+        for (ITestResult passedTest : testContext.getPassedTests().getAllResults()) {
+            passedTestIds.add(TestUtil.getId(passedTest));
+        }
+
+        Set <Integer> failedTestIds = new HashSet<Integer>();
+        for (ITestResult failedTest : testContext.getFailedTests().getAllResults()) {
+
+            // id = class + method + dataprovider
+            int failedTestId = TestUtil.getId(failedTest);
+
+            // if we saw this test as a failed test before we mark as to be deleted
+            // or delete this failed test if there is at least one passed version
+            if (failedTestIds.contains(failedTestId) || passedTestIds.contains(failedTestId)) {
+                testsToBeRemoved.add(failedTest);
+            } else {
+                failedTestIds.add(failedTestId);
+            }
+        }
+
+        // finally delete all tests that are marked
+        for (Iterator<ITestResult> iterator = testContext.getFailedTests().getAllResults().iterator(); iterator.hasNext(); ) {
+            ITestResult testResult = iterator.next();
+            if (testsToBeRemoved.contains(testResult)) {
+                iterator.remove();
+            }
+        }
+
+
+    }*/
 
 
 }
