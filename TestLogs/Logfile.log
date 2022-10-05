@@ -788,3 +788,9 @@
 0    [main] WARN  org.hibernate.orm.deprecation  - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
 1401 [main] WARN  org.hibernate.orm.connections.pooling  - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
 4667 [main] WARN  org.hibernate.dialect.DerbyDialect  - HHH000430: The DerbyDialect dialect has been deprecated; use one of the version-specific dialects instead
+1    [main] WARN  org.hibernate.orm.deprecation  - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+13871 [main] WARN  org.hibernate.orm.connections.pooling  - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+30459 [main] WARN  org.hibernate.dialect.DerbyDialect  - HHH000430: The DerbyDialect dialect has been deprecated; use one of the version-specific dialects instead
+0    [main] WARN  org.hibernate.orm.deprecation  - HHH90000012: Recognized obsolete hibernate namespace http://hibernate.sourceforge.net/hibernate-configuration. Use namespace http://www.hibernate.org/dtd/hibernate-configuration instead.  Support for obsolete DTD/XSD namespaces may be removed at any time.
+380  [main] WARN  org.hibernate.orm.connections.pooling  - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+3153 [main] WARN  org.hibernate.dialect.DerbyDialect  - HHH000430: The DerbyDialect dialect has been deprecated; use one of the version-specific dialects instead
